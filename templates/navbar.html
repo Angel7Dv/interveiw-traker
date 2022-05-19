@@ -1,16 +1,25 @@
 <nav class="border bg-gray-600 text-white py-5 px-8">   
     <div class="flex justify-between">
 
-        
+        {{request.user}}
         <button>home</button>
 
         <div class="grid grid-cols-2 gap-2">
+            {% if request.user.is_authenticated %}
+
+            <button class="hover:bg-gray-400 border-black rounded-3xl p-2">
+                <a href="{% url 'logout' %}">
+                    logout
+                </a>
+            </button>
+            {% else %}
             <button class="hover:bg-gray-400 border-black rounded-3xl p-2">
                 <a href="{% url 'login' %}">
                     login
                 </a>
             </button>
             <button class="hover:bg-gray-400 border-black rounded-3xl p-2">register</button>
+            {% endif %}
         </div>
     </div>
 
