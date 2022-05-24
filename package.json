@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "postcss static/css/main.css -o static/css/main.min.css",
-    "build-watch": "npx tailwindcss -i ./static/css/main.css -o ./static/css/main.min.css --watch"
+    "build-watch": "npx tailwindcss -i ./static/css/tailwind.css -o ./static/css/main.css --watch"
     
   },
   "keywords": [],
