@@ -10,10 +10,13 @@
     <h1 class="text-center text-4xl font-bold">register your Inteviews</h1>
 </div>
 
-<table>
-    <thead>
-        <tr>
-            <td>Nombre</td>
+
+<div class="flex flex-col justify-center    ">
+
+<table class="border shadow-2xl shadow-blacks">
+    <thead class="border my-5">
+        <tr class="border border-black my-4">
+            <td class="border-x-2 border-black px-2">Nombre</td>
             <td>sitio Web</td>
             <td>Primera Aplicacion</td>
             <td>estado del proceso</td>
@@ -28,10 +31,30 @@
             <td>asd</td>
         </tr>
 
+        <tr>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{add_vacant_form.as_p}}
+                <button class="border bg-gray-400" type="submit"> enviar</button>
+            </form>
+        </tr>
+    
     </tbody>
-
+    
+    
 </table>
+<div class="bg-teal-500 text-center">
+    <button id="add" >
+        add
+    </button>
+</div>
 
+</div>
+
+<script>
+    const add = document.getElementById("add")
+    add.target.onClick(console.log("cliqueado"))
+</script>
 
 
 {% endblock content %}
