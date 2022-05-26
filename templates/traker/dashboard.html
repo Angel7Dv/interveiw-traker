@@ -1,75 +1,13 @@
-{% extends '../base.html' %}  <!-- trae a main como padre -->
-{% block title %}titulo de la pagina{% endblock %}
+{% extends '../base.html' %}
+<!-- trae a main como padre -->
+{% block title %}Vacants resgister{% endblock %}
 
 
-{% block content %}  
+{% block content %}
 
 <!-- bloque de contenido a utilizar -->
 
-<div>
-    <h1 class="text-center text-4xl font-bold">register your Inteviews</h1>
-</div>
-
-
-<div class="flex flex-col justify-center    ">
-
-    <table class="border shadow-2xl shadow-blacks">
-        <thead class="border my-5">
-            <tr class="border border-black my-4">
-                <td class="border-x-2 border-black px-2" > roll_Name </td>
-                <td class="border-x-2 border-black px-2" > state </td>
-                <td class="border-x-2 border-black px-2" > enterprise </td>
-                <td class="border-x-2 border-black px-2" > roll_description </td>
-                <td class="border-x-2 border-black px-2" > strategy </td>
-                <td class="border-x-2 border-black px-2" > my cv </td>
-                <td class="border-x-2 border-black px-2" > feed_back </td>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in vacants %}
-            <tr>
-                <td>{{ i.roll_Name }}</td>
-                <td>{{ i.state }}</td>
-                <td>{{ i.enterprise }}</td>
-                <td>{{ i.roll_description }}</td>
-                <td>{{ i.strategy }}</td>
-                <td>{{ i.my_cv }}</td>
-                <td>{{ i.feed_back }}</td>
-            </tr>
-            {% endfor %}
-            <tr>
-                <form action="" method="POST">
-                    {% csrf_token %}
-
-                    <tr>
-                        <td> {{ add_vacant_form.roll_Name }}</td>
-                        <td> {{ add_vacant_form.state }}</td>
-                        <td> {{ add_vacant_form.enterprise }}</td>
-                        <td> {{ add_vacant_form.roll_description }}</td>
-                        <td> {{ add_vacant_form.strategy }}</td>
-                        <td> {{ add_vacant_form.my_cv }}</td>
-                        <td> {{ add_vacant_form.feed_back }}</td>
-                    </tr>
-     
-                    <button class="border bg-gray-400" type="submit"> enviar</button>
-                </form>
-            </tr>
-        
-        </tbody>
-        
-        
-    </table>
-    <div class="bg-teal-500 text-center">
-        <button id="add" >
-            add
-        </button>
-    </div>
-    
-    </div>
+{% include './vacants.html' %}
 
 
 {% endblock content %}
-
-
-
-

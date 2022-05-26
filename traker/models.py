@@ -4,15 +4,17 @@ from django.db import models
 
 
 class type_interview(models.TextChoices):
-    technical = "technical"
-    cultural = "cultural"
+    TECHNICAL = "technical"
+    CULTURAL = "cultural"
 
 
 class vacant_state(models.TextChoices):
-    cancelled = "cancelled"
-    not_approved = "not_approved"
-    next_interview = "next_interview"
-    ghosting = "ghosting"
+    SEND_CV = "send_cv"
+    CANCELLED = "cancelled"
+    NOT_APPROVED = "not_approved"
+    NEXT_INTERVIEW = "next_interview"
+    GHOSTING = "ghosting"
+
 
 # MODELS
 
@@ -24,6 +26,9 @@ class Enterprise(models.Model):
     summary = models.TextField(blank=True)
     vision = models.TextField(blank=True)
     mission = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Vacant(models.Model):
