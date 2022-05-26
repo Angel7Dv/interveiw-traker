@@ -27,16 +27,18 @@ class Enterprise(models.Model):
 
 
 class Vacant(models.Model):
+    roll_Name = models.CharField(max_length=100)
     state = models.CharField(max_length=100, null=True,
                              blank=True, choices=vacant_state.choices)
     enterprise = models.ForeignKey(
-        Enterprise, related_name="vacante", on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    roll = models.TextField(blank=True)
-    my_cv = models.FileField(null=True, blank=True)
-    feed_back = models.TextField(blank=True)
-    roll = models.TextField(blank=True)
+        Enterprise, related_name="vacante", null=True, blank=True, on_delete=models.CASCADE)
 
+    roll_description = models.TextField(blank=True)
+
+    my_cv = models.FileField(null=True, blank=True)
+
+    feed_back = models.TextField(blank=True)
+    
     strategy = models.TextField(blank=True)
 
 
