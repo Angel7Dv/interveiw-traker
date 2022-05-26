@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.template.defaultfilters import slugify
 # TYPES
 
 
@@ -20,16 +20,20 @@ class vacant_state(models.TextChoices):
 class Enterprise(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
-    slug = models.CharField(max_length=100, unique=True)
-
     web = models.URLField(null=True, blank=True)
     glassdoor_link = models.URLField(null=True, blank=True)
     summary = models.TextField(blank=True)
     vision = models.TextField(blank=True)
     mission = models.TextField(blank=True)
 
+    slug = models.CharField(max_length=100, unique=True, null=True, blank=True)
+
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Enterprise, self).save(*args, **kwargs)
 
 
 class Vacant(models.Model):
@@ -44,8 +48,17 @@ class Vacant(models.Model):
     my_cv = models.FileField(null=True, blank=True)
 
     feed_back = models.TextField(blank=True)
-    
+
     strategy = models.TextField(blank=True)
+
+    slug = models.CharField(max_length=100, unique=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.roll_Name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.roll_Name)
+        super(Vacant, self).save(*args, **kwargs)
 
 
 class Interview(models.Model):
@@ -57,6 +70,15 @@ class Interview(models.Model):
     preparation = models.TextField(blank=True)
 
     feed_back = models.TextField(blank=True)
+
+    slug = models.CharField(max_length=100, unique=True, null=True, blank=True)
+
+    def __str__(self):
+        return f'interview {self.vacant.enterprise} {self.day}'
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(f'interview{self.vacant.enterprise}{self.day}')
+        super(Interview, self).save(*args, **kwargs)
 
 
 class NetWorking(models.Model):
@@ -73,9 +95,21 @@ class NetWorking(models.Model):
     feed_back = models.TextField(blank=True)
     position = models.TextField(blank=True)
 
+    slug = models.CharField(max_length=100, unique=True, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.enterprise} {self.name}'
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(f'{self.enterprise} {self.name}')
+        super(NetWorking, self).save(*args, **kwargs)
+
 
 class SocialNetworks(models.Model):
     facebook = models.URLField(null=True, blank=True)
     twitter = models.URLField(null=True, blank=True)
     instagram = models.URLField(null=True, blank=True)
     linkedin = models.URLField(null=True, blank=True)
+
+    def __str__(self):
+        return f'SocialNetworks {self.enterprise} {self.enterprise}'
