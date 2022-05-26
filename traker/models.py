@@ -17,10 +17,11 @@ class vacant_state(models.TextChoices):
 
 
 # MODELS
-
-
 class Enterprise(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
+
+    slug = models.CharField(max_length=100, unique=True)
+
     web = models.URLField(null=True, blank=True)
     glassdoor_link = models.URLField(null=True, blank=True)
     summary = models.TextField(blank=True)
