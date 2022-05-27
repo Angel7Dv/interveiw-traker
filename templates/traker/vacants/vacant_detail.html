@@ -41,6 +41,13 @@
             add interview
         </a>
 
+        
+        <form action="{% url 'interview' vacant.slug %}" method="post">
+            {% csrf_token %}
+            <input type="date" name="ADD_INTERVIEW" id="">
+            <input type="submit" name="query" value="vacant.slug">
+        </form>
+
     </div>
 
     <form id="enterprise_form" action="" class="flex flex-col">

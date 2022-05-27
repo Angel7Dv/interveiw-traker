@@ -44,8 +44,7 @@
                     <form method="POST" action="{% url 'vacant' i.slug i.slug %}">
                         {% csrf_token %}
                         <div class="flex">
-                            <input class="w-full" type="text" name="query">
-                            <button type="submit" name="ADD_ENTERPRISE">ADD</button>
+                            <input class="w-full" type="text" name="ADD_ENTERPRISE">
                         </div>
                     </form>
                 </td>
