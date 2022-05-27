@@ -13,7 +13,6 @@ def dashboard(request):
     if request.method == 'POST':
         if 'VACANTS' in request.POST:
             add_vacant_form = VacantForm(request.POST)
-            print(add_vacant_form)
             if add_vacant_form.is_valid():
                 add_vacant_form.save()
                 return redirect("index")
@@ -28,12 +27,9 @@ def vacant(request, slug_enterprise, vacant_slug):
     vacant = get_object_or_404(Vacant, slug=vacant_slug)
     vacant_form = VacantForm(instance=vacant)
     # interview_form = InterviewForm()
-
     if request.method == 'DELETE':
         vacant.delete()
         return JsonResponse({'success': "delete"}), redirect("index")
-
-    print("view vacant")
     if request.method == 'POST':
         if 'ADD_ENTERPRISE' in request.POST:
             query = request.POST.get('query', '')
@@ -44,14 +40,12 @@ def vacant(request, slug_enterprise, vacant_slug):
             vacant.save()
             return redirect("index")
         elif vacant_form.is_valid():
-            print(vacant_form)
             vacant_form.save()
             return redirect("index")
     ctx = {
         'vacant': vacant,
         'vacant_form': vacant_form
     }
-    print(vacant)
     return render(request, "traker/vacants/vacant_detail.html", ctx)
 
 

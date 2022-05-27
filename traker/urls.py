@@ -5,8 +5,6 @@ urlpatterns = [
     path('<str:slug_enterprise>/<str:vacant_slug>/', vacant, name="vacant"), #allow delete
     path('<str:slug_enterprise>/', view_enterprise, name="view_enterprise"),
 
-   
-
     # path('<str:enterprise>/<str:vacant>/<str:interview>', dashboard, name="dashboard"),
 
     
