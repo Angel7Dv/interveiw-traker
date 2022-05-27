@@ -13,6 +13,7 @@ def dashboard(request):
     if request.method == 'POST':
         if 'VACANTS' in request.POST:
             add_vacant_form = VacantForm(request.POST)
+            print(add_vacant_form)
             if add_vacant_form.is_valid():
                 add_vacant_form.save()
                 return redirect("index")
@@ -22,42 +23,52 @@ def dashboard(request):
     }
     return render(request, 'traker/dashboard.html', ctx)
 
-# url delete-vacant/id/
-def vacant(request, vacant_slug):
+# http://127.0.0.1:8000/dashboard/<vacant_slug>
+def vacant(request, slug_enterprise, vacant_slug):
+    vacant = get_object_or_404(Vacant, slug=vacant_slug)
+    vacant_form = VacantForm(instance=vacant)
+    # interview_form = InterviewForm()
 
     if request.method == 'DELETE':
-        vacant = get_object_or_404(Vacant, slug=vacant_slug)
         vacant.delete()
         return JsonResponse({'success': "delete"}), redirect("index")
-    else:
-        print(vacant_slug)
-        return render(request, "traker/vacant_detail.html")
 
-
-
-# http://127.0.0.1:8000/dashboard/add-new-enterprise/0/
-def add_new_enterprise(request, vacant_id):
-    query = request.POST.get('query', '')
+    print("view vacant")
     if request.method == 'POST':
-        vacant = Vacant.objects.get(pk=vacant_id)
-        enterprise = Enterprise.objects.get_or_create(name=query)
-        vacant.enterprise = enterprise[0]
-        vacant.save()
-        return redirect("index")
+        if 'ADD_ENTERPRISE' in request.POST:
+            query = request.POST.get('query', '')
+            vacant = Vacant.objects.get(slug=vacant_slug)
+
+            enterprise = Enterprise.objects.get_or_create(name=query)
+            vacant.enterprise = enterprise[0]
+            vacant.save()
+            return redirect("index")
+        elif vacant_form.is_valid():
+            print(vacant_form)
+            vacant_form.save()
+            return redirect("index")
+    ctx = {
+        'vacant': vacant,
+        'vacant_form': vacant_form
+    }
+    print(vacant)
+    return render(request, "traker/vacants/vacant_detail.html", ctx)
 
 
-def view_enterprise(request, slug_enterprise):
+def view_enterprise(request, slug_enterprise):  # set enterprise detail
     enterprise = get_object_or_404(Enterprise, slug=slug_enterprise)
-
     vacants = Vacant.objects.filter(enterprise=enterprise)
-
-    print(vacants)
     form_enterprise = EnterpriseForm(instance=enterprise)
 
+    if request.method == 'POST':
+        form_enterprise = EnterpriseForm(request.POST, instance=enterprise)
+        if form_enterprise.is_valid():
+            form_enterprise.save()
+            return redirect('view_enterprise', slug_enterprise)
     ctx = {
-        'form_enterprise':form_enterprise,
-        'enterprise':enterprise,
-        'vacants':vacants
+        'form_enterprise': form_enterprise,
+        'enterprise': enterprise,
+        'vacants': vacants
     }
 
-    return render(request, 'traker/enterprise.html', ctx)
+    return render(request, 'traker/enterprise_detail.html', ctx)

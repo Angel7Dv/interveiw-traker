@@ -12,18 +12,26 @@
                 <!-- <td class="border-x-2 border-black px-2"> my cv </td> -->
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-center font-bold">
 
 
             {% for i in vacants %}
             <tr class="border border-black">
                 <td class="border-x-2 border-black px-2">
-                    <a href="{% url 'vacant' i.slug %}">
+                    {% if i.enterprise %}
+                    <a href="{% url 'vacant' i.enterprise.slug i.slug %}">
                         {{ i.roll_Name }}
                     </a>
+                    {% else %}
+                    <a href="{% url 'vacant' i.slug i.slug %}">
+                        {{ i.roll_Name }}
+                    </a>
+                    {% endif %}
+
+
                 </td>
                 <td class="border-x-2 border-black">
-                    {{ add_vacant_form.state }}
+                    {{ i.state }}
                 </td>
                 {% if i.enterprise %}
                 <td class="border-x-2 border-black px-2">
@@ -33,21 +41,20 @@
                 </td>
                 {% else %}
                 <td class="border-x-2 border-black">
-                    <form method="POST" action="{% url 'add_new_enterprise' i.id %}">
+                    <form method="POST" action="{% url 'vacant' i.slug i.slug %}">
                         {% csrf_token %}
                         <div class="flex">
                             <input class="w-full" type="text" name="query">
-                            <button type="submit">ADD</button>
+                            <button type="submit" name="ADD_ENTERPRISE">ADD</button>
                         </div>
                     </form>
                 </td>
                 {% endif %}
-                <td class="border-r-2 border-black px-2 flex justify-around">
-                    <a class="bg-red-500 rounded-lg" onclick="delete_vacant('{{i.slug}}')" href="/">
+                <td class="border-r-2 border-black">
+                    <a class="bg-red-500 rounded-lg px-2 w-full" onclick="delete_vacant('{{i.slug}}')" href="/">
                         {% csrf_token %}
-                        delete</a>
-                    <!-- href="{% url 'vacant' i.slug %}" -->
-                    <a>edit</a>
+                        delete
+                    </a>
                 </td>
                 <!-- <td>{{ i.my_cv }}</td> -->
             </tr>
@@ -83,12 +90,10 @@
                     'X-CSRFToken': csrftoken
                 }
             });
-            if(apiRes.status == 200){
+            if (apiRes.status == 200) {
             }
         }
     </script>
-
-
     {% include './vacants_add.html' %}
 
 

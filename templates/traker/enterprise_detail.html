@@ -27,20 +27,16 @@
 <div class="mt-4 mx-16">
     <div class="mb-5">
         {% for i in vacants %}
-        <a href="#" class="text-xl underline font-bold">
+        <a href="{% url 'vacant' i.enterprise.slug i.slug %}" class="text-xl underline font-bold">
             vacant: {{ i.roll_Name }}
-
             status: {{ i.state }}
         </a>
         {% endfor %}
-
     </div>
 
-    <form id="enterprise_form" action="" class="flex flex-col">
+    <form id="enterprise_form" method="POST" action="" class="flex flex-col">
         {% csrf_token %}
-
         <div class="flex">
-
             <p class="underline text-2xl font-bold  mr-8">Enterprise:</p>
             {{form_enterprise.name}}
         </div>
