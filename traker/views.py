@@ -30,6 +30,7 @@ def dashboard(request):
 def vacant(request, slug_enterprise, vacant_slug):
     vacant = get_object_or_404(Vacant, slug=vacant_slug)
     vacant_form = VacantForm(instance=vacant)
+    interviews = Interview.objects.filter(vacant=vacant)
 
     # Delete
     if request.method == 'DELETE':
@@ -51,7 +52,8 @@ def vacant(request, slug_enterprise, vacant_slug):
             return redirect("index")
     ctx = {
         'vacant': vacant,
-        'vacant_form': vacant_form
+        'vacant_form': vacant_form,
+        'interviews':interviews
     }
     return render(request, "traker/vacants/vacant_detail.html", ctx)
 
@@ -82,16 +84,18 @@ def interview(request, interview_slug):
     # vacant = get_object_or_404(Vacant, slug=vacant_slug)
     # interview = get_object_or_404(Interview, slug=interview_slug)
 
-    print("test1")
     if request.method == 'POST':
-        print("test2")
         if "ADD_INTERVIEW" in request.POST:
-            print("test3")
+            query_day = request.POST.get("ADD_INTERVIEW", "")
+            current_vacant = get_object_or_404(Vacant, slug=interview_slug)
 
-            query = request.POST.get("query", "")
+            new_interview = Interview.objects.create(vacant=current_vacant, day=query_day)
+            new_interview.save()
 
-            print(query, interview_slug)
+            print(query_day, vacant)
 
             # new_interview = Interview.objects.create()
 
             return JsonResponse({"success": "success"})
+    else:
+        return render(request, "traker/interview_detail.html")

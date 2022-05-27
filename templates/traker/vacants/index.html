@@ -15,45 +15,8 @@
         <tbody class="text-center font-bold">
 
 
-            {% for i in vacants %}
-            <tr class="border border-black">
-                <td class="border-x-2 border-black px-2">
-                    {% if i.enterprise %}
-                    <a href="{% url 'vacant' i.enterprise.slug i.slug %}">
-                        {{ i.roll_Name }}
-                    </a>
-                    {% else %}
-                    <a href="{% url 'vacant' i.slug i.slug %}">
-                        {{ i.roll_Name }}
-                    </a>
-                    {% endif %}
+            {% include './vancant_table.html' %}
 
-
-                </td>
-                <td class="border-x-2 border-black">
-                    {{ i.state }}
-                </td>
-                {% if i.enterprise %}
-                <td class="border-x-2 border-black px-2">
-                    <a href="{% url 'view_enterprise' i.enterprise.slug %}">
-                        {{i.enterprise}}
-                    </a>
-                </td>
-                {% else %}
-                <td class="border-x-2 border-black">
-                    <form method="POST" action="{% url 'vacant' i.slug i.slug %}">
-                        {% csrf_token %}
-                        <div class="flex">
-                            <input class="w-full" type="text" name="ADD_ENTERPRISE">
-                        </div>
-                    </form>
-                </td>
-                {% endif %}
-                <td class="border-r-2 border-black">
-                    {% include './vancant_delete.html' %}
-                </td>
-            </tr>
-            {% endfor %}
         </tbody>
     </table>
 

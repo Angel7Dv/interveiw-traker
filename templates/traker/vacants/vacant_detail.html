@@ -1,6 +1,6 @@
 {% extends '../../base.html' %}
 <!-- trae a main como padre -->
-{% block title %}Vacants resgister{% endblock %}
+{% block title %}Vacant detail{% endblock %}
 
 
 {% block content %}
@@ -16,9 +16,9 @@
 
     <span><a class="text-bold underline" href="{% url 'dashboard' %}">home/ </a> </span>
     {% if vacant.enterprise %}
-    <span><a class="text-bold underline" href="{% url 'vacant' vacant.enterprise.slug vacant.slug %}">
-        {{ vacant.enterprise }}/
-    </a></span>
+    <span><a class="text-bold underline" href="{% url 'view_enterprise' vacant.enterprise.slug %}">
+            {{ vacant.enterprise }}/
+        </a></span>
     {% else %}
     <span><a class="text-bold underline" href="{% url 'dashboard' %}">add enterprise/ </a> </span>
     <span><a class="text-bold underline" href="{% url 'vacant' vacant.slug vacant.slug %}">{{vacant}}/ </a></span>
@@ -29,23 +29,31 @@
 
 
 <div class="mt-4 mx-16">
-    <div class="my-5 border border-black">
-        {% if vacants.interview %}
-        { for i in vacants.interview %}
-        <a href="#" class="text-xl underline font-bold">
-            next interview: {{ i.day }}
-        </a>
-        { endfor %}
+    <div class="my-5 border border-black flex">
+        {% if vacant.interview %}
+        {% for i in interviews %}
+        <div>
+            <a href="#" class="text-xl underline font-bold">
+                {{i.vacant}}
+                next interview: {{ i.day }}
+                type: {{ i.type }}
+            </a>
+            {% endfor %}
+        </div>
         {% endif %}
         <a href="#" class="text-xl underline font-bold">
             add interview
         </a>
 
-        
+
         <form action="{% url 'interview' vacant.slug %}" method="post">
+            <span href="#" class="text-xl underline font-bold">
+                add interview
+            </span>
+    
             {% csrf_token %}
             <input type="date" name="ADD_INTERVIEW" id="">
-            <input type="submit" name="query" value="vacant.slug">
+            <input type="submit" name="query" value="enviar">
         </form>
 
     </div>
