@@ -4,23 +4,21 @@
 
     <table class="border shadow-2xl shadow-blacks mt-8">
         <thead class="border my-5 text-center">
-            <tr class="border border-black my-4">
-                <td class="border-x-2 border-black px-2"> roll_Name </td>
-                <td class="border-x-2 border-black px-2"> state </td>
-                <td class="border-x-2 border-black px-2"> enterprise </td>
-                <td class="border-x-2 border-black px-2"> options </td>
+            <tr class="border border-black my-4 text-xl font-bold">
+                <td class="border-x-2 border-black px-2"> Roll Name </td>
+                <td class="border-x-2 border-black px-2"> Status </td>
+                <td class="border-x-2 border-black px-2"> Enterprise </td>
+                <td class="border-x-2 border-black px-2"> Options </td>
                 <!-- <td class="border-x-2 border-black px-2"> my cv </td> -->
             </tr>
         </thead>
-        <tbody class="text-center font-bold">
+        <tbody class="text-center font-semibold">
 
-
-            {% include './vancant_table.html' %}
-
+            {% include './table.html' %}
         </tbody>
     </table>
 
-    {% include './vacants_add.html' %}
+    {% include './add.html' %}
 
 
     <!-- 

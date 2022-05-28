@@ -1,4 +1,4 @@
-{% extends '../base.html' %}
+{% extends './base/index.html' %}
 <!-- trae a main como padre -->
 {% block title %}Vacants resgister{% endblock %}
 
@@ -7,8 +7,7 @@
 
 <!-- bloque de contenido a utilizar -->
 
-<h1>Dashboard</h1>
-{% include './vacants/index.html' %}
+{% include './vacant_table/index.html' %}
 
 
 {% endblock content %}

@@ -22,11 +22,11 @@ def register_user(request):
         form = CreateUserForm()
     ctx = {'form':form}
 
-    return render(request, 'users/register.html', ctx)
+    return render(request, 'register.html', ctx)
 
 
 
 @login_required
 def user_panel(request):
-    return render(request, 'users/user_panel.html')
+    return render(request, 'user_panel.html')
 

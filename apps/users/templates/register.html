@@ -1,4 +1,4 @@
-{% extends '../base.html' %}
+{% extends './base/index.html' %}
 <!-- trae a main como padre -->
 {% block title %}titulo de la pagina{% endblock %}
 
@@ -9,20 +9,16 @@
 
 <form id="form" method="POST" action="">
     {% csrf_token %}
-    <div class="input-group mb-3">
-        {{ form.username }}
+    <div class="input-group mb-2">
+        email: {{ form.email }}
     </div>
     <div class="input-group mb-2">
 
-        {{ form.email }}
+        password: {{ form.password1 }}
     </div>
     <div class="input-group mb-2">
 
-        {{ form.password1 }}
-    </div>
-    <div class="input-group mb-2">
-
-        {{ form.password2 }}
+        confirm password: {{ form.password2 }}
     </div>
 
     <input type="submit" class="w-100 mb-2 btn btn-lg rounded-4 btn-primary"></input>

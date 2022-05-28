@@ -1,12 +1,13 @@
-{% extends '../base.html' %}
+{% extends './base/index.html' %}
+
 <!-- trae a main como padre -->
 {% block title %}Enterprise Detail{% endblock %}
 
 
 {% block content %}
-<h1 class="text-center text-5xl mb-5">  Enterprise Description
-    <span class="text-red-900">{enterprise}} </span>
-   
+<h1 class="text-center text-5xl mb-5"> interview Description
+    <span class="text-red-900">{{interview}} </span>
+
 </h1>
 
 <div class="mx-12">
@@ -15,8 +16,8 @@
     </span>
     <span><a class="text-bold underline" href="{% url 'dashboard' %}">home/</a> </span>
     <span>
-        <a class="text-bold underline" href="{ url 'enterprise' vacant.enterprise.slug %}">
-            {{enterprise}}/
+        <a class="text-bold underline" href="{% url 'enterprise' vacant.enterprise.slug %}">
+            {{vacant.enterprise}}/
         </a>
     </span>
     <span>
@@ -26,20 +27,20 @@
     </span>
 </div>
 
-
-
 <div class="mt-4 mx-16">
-
     <form id="enterprise_form" method="POST" action="" class="flex flex-col">
+
         {% csrf_token %}
         <div class="flex">
-            <p class="underline text-2xl font-bold  mr-8">Enterprise:</p>
-            {{ interview.vacant}} {{ interview.day}}
+            <p class="underline text-2xl font-bold mr-8">
+                {{ interview.vacant}} / {{ interview.enterprise}} / {{ interview.day}}
+            </p>
         </div>
 
-        <div class="flex">
-            <p class="underline text-2xl font-bold  mr-8">Enterprise:</p>
-            vacant = {{ interview_form.vacant}}
+        <div class="flex mt-5">
+            <p class="underline text-2xl font-bold mr-8">Enterprise:</p>
+            vacant = {{ interview.vacant}}
+            {{ interview_form.vacant}}
         </div>
 
         <div class="flex space-x-10">
@@ -60,13 +61,13 @@
 
 
 
-        <div class="flex flex-col  flex-shrink-0">
-            <p class="underline text-2xl font-bold">vision</p>
+        <div class="flex flex-col flex-shrink-0">
+            <p class="underline text-2xl font-bold">preparation</p>
             {{ interview_form.preparation}}
         </div>
 
-        <div class="flex flex-col  flex-shrink-0">
-            <p class="underline text-2xl font-bold">mission</p>
+        <div class="flex flex-col flex-shrink-0">
+            <p class="underline text-2xl font-bold">Feedback</p>
             {{ interview_form.feed_back}}
         </div>
 
@@ -81,13 +82,14 @@
 
 <script>
     const enterprise_form = document.getElementById("enterprise_form")
-
-    for (let i of Array(7).keys()) {
+    for (let i of Array(6).keys()) {
         enterprise_form[i].className = "w-full bg-gray-300 text-gray-900 font-semibold leading-none focus:outline-none bg-transparent border-b border-black mb-16"
-
     }
 
-    enterprise_form[1].classList.add("underline", "text-2xl", "font-bold")
+
+    enterprise_form[1].className = "hidden"
+
+    enterprise_form[2].type = "datetime-local"
 
 </script>
 

@@ -1,5 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from users.models import User
+
 # TYPES
 
 
@@ -18,6 +20,8 @@ class vacant_state(models.TextChoices):
 
 # MODELS
 class Enterprise(models.Model):
+    user_register = models.ForeignKey(
+        User, null=True, blank=True, related_name="enterprises", on_delete=models.CASCADE)
     name = models.CharField(max_length=100, unique=True)
 
     web = models.URLField(null=True, blank=True)
@@ -37,20 +41,17 @@ class Enterprise(models.Model):
 
 
 class Vacant(models.Model):
+    user_register = models.ForeignKey(
+        User, null=True, blank=True, related_name="vacants", on_delete=models.CASCADE)
     roll_Name = models.CharField(max_length=100)
     state = models.CharField(max_length=100, null=True,
                              blank=True, choices=vacant_state.choices)
     enterprise = models.ForeignKey(
         Enterprise, related_name="vacante", null=True, blank=True, on_delete=models.CASCADE)
-
     roll_description = models.TextField(blank=True)
-
     my_cv = models.FileField(null=True, blank=True)
-
     feed_back = models.TextField(blank=True)
-
     strategy = models.TextField(blank=True)
-
     slug = models.CharField(max_length=100, unique=True, null=True, blank=True)
 
     def __str__(self):
@@ -62,6 +63,8 @@ class Vacant(models.Model):
 
 
 class Interview(models.Model):
+    user_register = models.ForeignKey(
+        User, null=True, blank=True, related_name="interviews", on_delete=models.CASCADE)
     vacant = models.ForeignKey(
         Vacant, related_name="interview", on_delete=models.CASCADE)
     day = models.DateTimeField()
@@ -82,6 +85,8 @@ class Interview(models.Model):
 
 
 class NetWorking(models.Model):
+    user_register = models.ForeignKey(
+        User, null=True, blank=True, related_name="networking", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     enterprise = models.ForeignKey(
         Enterprise, related_name="networking", null=True, blank=True, on_delete=models.CASCADE)
@@ -110,6 +115,7 @@ class SocialNetworks(models.Model):
     twitter = models.URLField(null=True, blank=True)
     instagram = models.URLField(null=True, blank=True)
     linkedin = models.URLField(null=True, blank=True)
+    tlf = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f'SocialNetworks {self.enterprise} {self.enterprise}'

@@ -4,9 +4,9 @@
 
 
 {% block content %}
-<h1 class="text-center text-5xl mb-5">  Enterprise Description
-    <span class="text-red-900">{{enterprise}} </span>
-   
+<h1 class="text-center text-5xl mb-5"> interview Description
+    <span class="text-red-900">{{interview}} </span>
+
 </h1>
 
 <div class="mx-12">
@@ -15,8 +15,13 @@
     </span>
     <span><a class="text-bold underline" href="{% url 'dashboard' %}">home/</a> </span>
     <span>
-        <a class="text-bold underline" href="{% url 'enterprise' enterprise.slug %}">
-            {{enterprise}}/
+        <a class="text-bold underline" href="{% url 'enterprise' vacant.enterprise.slug %}">
+            {{vacant.enterprise}}/
+        </a>
+    </span>
+    <span>
+        <a class="text-bold underline" href="{% url 'vacant' vacant.enterprise.slug vacant.slug %}">
+            {{vacant}}/
         </a>
     </span>
 </div>
@@ -24,50 +29,47 @@
 
 
 <div class="mt-4 mx-16">
-    <div class="mb-5">
-        {% for i in vacants %}
-        <a href="{% url 'vacant' i.enterprise.slug i.slug %}" class="text-xl underline font-bold">
-            vacant: {{ i.roll_Name }}
-            status: {{ i.state }}
-        </a>
-        {% endfor %}
-    </div>
 
     <form id="enterprise_form" method="POST" action="" class="flex flex-col">
         {% csrf_token %}
         <div class="flex">
-            <p class="underline text-2xl font-bold  mr-8">Enterprise:</p>
-            {{form_enterprise.name}}
+            <p class="underline text-2xl font-bold mr-8">Enterprise:</p>
+            {{ interview.vacant}} {{ interview.day}}
+        </div>
+
+        <div class="flex mt-5">
+            <p class="underline text-2xl font-bold mr-8">Enterprise:</p>
+            vacant = {{ interview.vacant}}
+
+            {{ interview_form.vacant}}
         </div>
 
         <div class="flex space-x-10">
-
             <div class="flex space-x-2 w-full">
                 <p class="flex-shrink-0">
-                    Web Link:
+                    day of interview:
                 </p>
-                {{form_enterprise.web}}
+                {{ interview_form.day}}
             </div>
 
             <div class="flex space-x-2 w-full ">
                 <p class="flex-shrink-0">
-                    Glassdoor Link:
+                    type of interview:
                 </p>
-                {{form_enterprise.glassdoor_link}}
+                {{ interview_form.type}}
             </div>
         </div>
 
-        <p class="underline text-2xl font-bold">summary</p>
-        {{form_enterprise.summary}}
 
-        <div class="flex flex-col  flex-shrink-0">
+
+        <div class="flex flex-col flex-shrink-0">
             <p class="underline text-2xl font-bold">vision</p>
-            {{form_enterprise.vision}}
+            {{ interview_form.preparation}}
         </div>
 
-        <div class="flex flex-col  flex-shrink-0">
+        <div class="flex flex-col flex-shrink-0">
             <p class="underline text-2xl font-bold">mission</p>
-            {{form_enterprise.mission}}
+            {{ interview_form.feed_back}}
         </div>
 
         <div class="bg-teal-900 text-2xl text-white text-center">
@@ -81,13 +83,14 @@
 
 <script>
     const enterprise_form = document.getElementById("enterprise_form")
-
-    for (let i of Array(7).keys()) {
+    for (let i of Array(5).keys()) {
         enterprise_form[i].className = "w-full bg-gray-300 text-gray-900 font-semibold leading-none focus:outline-none bg-transparent border-b border-black mb-16"
-
     }
+    
 
-    enterprise_form[1].classList.add("underline", "text-2xl", "font-bold")
+    enterprise_form[1].className = "hidden"
+
+    enterprise_form[2].type = "datetime-local"
 
 </script>
 

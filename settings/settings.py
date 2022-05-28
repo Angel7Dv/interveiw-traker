@@ -44,6 +44,14 @@ INSTALLED_APPS = [
     'users',
 ]
 
+
+
+AUTH_USER_MODEL = 'users.User'
+
+LOGIN_URL = 'index'  # cuando quieren acceder a una url con el decorador  @login_required
+LOGIN_REDIRECT_URL = 'index'  
+LOGOUT_REDIRECT_URL = 'index' 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,6 +73,7 @@ LOGOUT_REDIRECT_URL = 'index'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # 'DIRS': [BASE_DIR, 'templates'],
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
