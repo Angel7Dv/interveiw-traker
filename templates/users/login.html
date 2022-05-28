@@ -1,0 +1,16 @@
+{% extends '../base.html' %}  <!-- trae a main como padre -->
+{% block title %}titulo de la pagina{% endblock %}
+
+
+{% block content %}  
+
+<!-- bloque de contenido a utilizar -->
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">login</button>
+</form>
+
+{% endblock content %}
+

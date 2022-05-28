@@ -4,7 +4,9 @@
   "description": "Django + Tailwind + Sqlite3  virtualenv",
   "main": "postcss.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "postcss static/css/main.css -o static/css/main.min.css",
+    "build-watch": "npx tailwindcss -i ./static/css/main.css -o ./static/css/main.min.css --watch"
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/RagAndRoll/interveiw-traker/issues"
   },
-  "homepage": "https://github.com/RagAndRoll/interveiw-traker#readme"
+  "homepage": "https://github.com/RagAndRoll/interveiw-traker#readme",
+  "dependencies": {
+    "autoprefixer": "^10.4.7",
+    "postcss-cli": "^9.1.0",
+    "tailwindcss": "^3.0.24"
+  }
 }

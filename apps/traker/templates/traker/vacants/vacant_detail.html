@@ -16,7 +16,7 @@
 
     <span><a class="text-bold underline" href="{% url 'dashboard' %}">home/ </a> </span>
     {% if vacant.enterprise %}
-    <span><a class="text-bold underline" href="{% url 'view_enterprise' vacant.enterprise.slug %}">
+    <span><a class="text-bold underline" href="{% url 'enterprise' vacant.enterprise.slug %}">
             {{ vacant.enterprise }}/
         </a></span>
     {% else %}
@@ -33,7 +33,7 @@
         {% if vacant.interview %}
         {% for i in interviews %}
         <div>
-            <a href="#" class="text-xl underline font-bold">
+            <a href="{% url 'interview' vacant.enterprise.slug vacant.slug i.slug %}" class="text-xl underline font-bold">
                 {{i.vacant}}
                 next interview: {{ i.day }}
                 type: {{ i.type }}
@@ -41,12 +41,8 @@
             {% endfor %}
         </div>
         {% endif %}
-        <a href="#" class="text-xl underline font-bold">
-            add interview
-        </a>
 
-
-        <form action="{% url 'interview' vacant.slug %}" method="post">
+        <form action="{% url 'interview' vacant.enterprise.slug vacant.slug vacant.slug %}" method="post">
             <span href="#" class="text-xl underline font-bold">
                 add interview
             </span>

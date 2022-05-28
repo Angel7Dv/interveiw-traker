@@ -27,6 +27,27 @@ def dashboard(request):
 # http://127.0.0.1:8000/dashboard/<vacant_slug>
 
 
+def enterprise(request, slug_enterprise):  # set enterprise detail
+    enterprise = get_object_or_404(Enterprise, slug=slug_enterprise)
+    vacants = Vacant.objects.filter(enterprise=enterprise)
+    form_enterprise = EnterpriseForm(instance=enterprise)
+
+    if request.method == 'POST':
+        form_enterprise = EnterpriseForm(request.POST, instance=enterprise)
+        if form_enterprise.is_valid():
+            form_enterprise.save()
+            return redirect('view_enterprise', slug_enterprise)
+
+    else:
+        ctx = {
+            'form_enterprise': form_enterprise,
+            'enterprise': enterprise,
+            'vacants': vacants
+        }
+
+        return render(request, 'traker/enterprise_detail.html', ctx)
+
+
 def vacant(request, slug_enterprise, vacant_slug):
 
     # GET
@@ -38,7 +59,7 @@ def vacant(request, slug_enterprise, vacant_slug):
     if request.method == 'DELETE':
         vacant.delete()
         return JsonResponse({'success': "delete"}), redirect("index")
-    
+
     elif request.method == 'POST':
         # PUT
         if 'ADD_ENTERPRISE' in request.POST:
@@ -53,54 +74,51 @@ def vacant(request, slug_enterprise, vacant_slug):
         elif vacant_form.is_valid():
             vacant_form.save()
             return redirect("index")
-    
+
     elif request.method == 'GET':
         ctx = {
             'vacant': vacant,
             'vacant_form': vacant_form,
-            'interviews':interviews
+            'interviews': interviews
         }
         return render(request, "traker/vacants/vacant_detail.html", ctx)
 
 
-def view_enterprise(request, slug_enterprise):  # set enterprise detail
-    enterprise = get_object_or_404(Enterprise, slug=slug_enterprise)
-    vacants = Vacant.objects.filter(enterprise=enterprise)
-    form_enterprise = EnterpriseForm(instance=enterprise)
+def interview(request, slug_enterprise, vacant_slug, interview_slug):
 
+    # current_enterprise = get_object_or_404(Enterprise, slug=slug_enterprise)
+    current_vacant = get_object_or_404(Vacant, slug=vacant_slug)
+    current_interview = get_object_or_404(Interview, slug=interview_slug)
+
+    interview_form = InterviewForm(instance=current_interview)
+    print("here")
     if request.method == 'POST':
-        form_enterprise = EnterpriseForm(request.POST, instance=enterprise)
-        if form_enterprise.is_valid():
-            form_enterprise.save()
-            return redirect('view_enterprise', slug_enterprise)
-    
-    else:
-        ctx = {
-            'form_enterprise': form_enterprise,
-            'enterprise': enterprise,
-            'vacants': vacants
-        }
-
-        return render(request, 'traker/enterprise_detail.html', ctx)
-
-
-def interview(request, interview_slug):
-
-    # vacant = get_object_or_404(Vacant, slug=vacant_slug)
-    # interview = get_object_or_404(Interview, slug=interview_slug)
-
-    if request.method == 'POST':
+        # CREATE
         if "ADD_INTERVIEW" in request.POST:
             query_day = request.POST.get("ADD_INTERVIEW", "")
-            current_vacant = get_object_or_404(Vacant, slug=interview_slug)
-
             new_interview = Interview.objects.create(vacant=current_vacant, day=query_day)
             new_interview.save()
-
             print(query_day, vacant)
-
             # new_interview = Interview.objects.create()
+            return redirect("vacant", slug_enterprise, vacant_slug)
+        # PUT
+        else:
+            print("here")
+            interview_form = InterviewForm(request.POST, instance=current_interview)
+            print("valid1")
+            print(interview_form.is_valid())
+            if interview_form.is_valid():
+                print("valid2")
+                interview_form.save()
+                return redirect("vacant", slug_enterprise, vacant_slug)
+            else:
+                return JsonResponse({"error": "valid2 error"})
 
-            return JsonResponse({"success": "success"})
-    else:
-        return render(request, "traker/interview_detail.html")
+
+    ctx = {
+        'interview':current_interview,
+        'vacant': current_vacant,
+        'interview_form': interview_form
+    }
+
+    return render(request, "traker/interview_detail.html" , ctx)
