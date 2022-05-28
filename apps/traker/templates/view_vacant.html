@@ -33,9 +33,13 @@
     <div class="my-5 border border-black flex">
         {% if vacant.interview %}
         {% for i in interviews %}
+
         <div>
-            <a href="{% url 'interview' vacant.enterprise.slug vacant.slug i.slug %}"
-                class="text-xl underline font-bold">
+            {% if vacant.enterprise %}
+            <a href="{% url 'interview' vacant.enterprise.slug vacant.slug i.slug %}" class="text-xl underline font-bold">
+            {% else %}
+            <a href="{% url 'interview' vacant.slug vacant.slug i.slug %}" class="text-xl underline font-bold">
+            {% endif %}
                 next interview: {{ i.day }}
                 type: {{ i.type }}
             </a>
@@ -66,9 +70,9 @@
 
             <div class="flex space-x-2 w-full">
                 <p class="flex-shrink-0">
-                    State:
+                    Status:
                 </p>
-                {{ vacant_form.state }}
+                {{ vacant_form.status }}
             </div>
 
             <div class="flex space-x-2 w-full ">

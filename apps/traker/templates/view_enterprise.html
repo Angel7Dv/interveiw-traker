@@ -80,12 +80,14 @@
 
 </div>
 
+
+{% extends './networking/index.html' %}
+
 <script>
     const enterprise_form = document.getElementById("enterprise_form")
 
     for (let i of Array(7).keys()) {
         enterprise_form[i].className = "w-full bg-gray-300 text-gray-900 font-semibold leading-none focus:outline-none bg-transparent border-b border-black mb-16"
-
     }
 
     enterprise_form[1].classList.add("underline", "text-2xl", "font-bold")

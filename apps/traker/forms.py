@@ -6,12 +6,12 @@ from .models import Vacant, Enterprise, Interview, NetWorking, SocialNetworks
 class VacantForm(forms.ModelForm):
 	class Meta:
 		model = Vacant
-		fields = ['roll_Name','state','enterprise', 'roll_description', 'feed_back', 'strategy']
+		fields = '__all__'
 
 class EnterpriseForm(forms.ModelForm):
 	class Meta:
 		model = Enterprise
-		fields = ['name', 'web', 'glassdoor_link', 'summary', 'vision', 'mission']
+		fields = '__all__'
 
 class InterviewForm(forms.ModelForm):
 	class Meta:

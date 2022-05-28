@@ -15,7 +15,6 @@ def dashboard(request):
     if request.method == 'POST':
         if 'VACANTS' in request.POST:
             add_vacant_form = VacantForm(request.POST)
-
             if add_vacant_form.is_valid():
                 new_vacant = add_vacant_form.save(commit=False)
                 new_vacant.user_register = request.user
@@ -137,3 +136,6 @@ def add_interview(request, vacant_slug):
         new_interview.save()
         return redirect("index")
 
+def networking(request, slug_enterprise):
+    
+    return redirect("enterprise", slug_enterprise)

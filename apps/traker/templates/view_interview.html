@@ -16,14 +16,20 @@
     </span>
     <span><a class="text-bold underline" href="{% url 'dashboard' %}">home/</a> </span>
     <span>
+        {% if vacant.enterprise %}
         <a class="text-bold underline" href="{% url 'enterprise' vacant.enterprise.slug %}">
             {{vacant.enterprise}}/
         </a>
+        {% endif %}
     </span>
     <span>
+        {% if vacant.enterprise %}
         <a class="text-bold underline" href="{% url 'vacant' vacant.enterprise.slug vacant.slug %}">
-            {{vacant}}/
-        </a>
+            {% else %}
+            <a class="text-bold underline" href="{% url 'vacant' vacant.slug vacant.slug %}">
+                {{vacant}}/
+            </a>
+            {% endif %}
     </span>
 </div>
 
