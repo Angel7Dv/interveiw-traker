@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import VacantForm, InterviewForm, EnterpriseForm
-from .models import Vacant, Interview, Enterprise
+from .forms import VacantForm, InterviewForm, EnterpriseForm, NetWorkingForm
+from .models import Vacant, Interview, Enterprise, NetWorking
 
 from django.http import JsonResponse, HttpResponseRedirect
 # Create your views here.
@@ -9,7 +9,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 
 
 def dashboard(request):
-    vacants = Vacant.objects.all()
+    vacants = Vacant.objects.filter(user_register=request.user)
     add_vacant_form = VacantForm()
     print(add_vacant_form)
     if request.method == 'POST':
@@ -19,7 +19,7 @@ def dashboard(request):
                 new_vacant = add_vacant_form.save(commit=False)
                 new_vacant.user_register = request.user
                 new_vacant.save()
-                
+
                 return redirect("index")
             else:
                 print("no valid")
@@ -34,8 +34,13 @@ def dashboard(request):
 
 def enterprise(request, slug_enterprise):  # set enterprise detail
     enterprise = get_object_or_404(Enterprise, slug=slug_enterprise)
+    networking = NetWorking.objects.filter(
+        user_register=request.user, enterprise=enterprise)
+
     vacants = Vacant.objects.filter(enterprise=enterprise)
     form_enterprise = EnterpriseForm(instance=enterprise)
+
+    form_networking = NetWorkingForm()
 
     if request.method == 'POST':
         form_enterprise = EnterpriseForm(request.POST, instance=enterprise)
@@ -49,7 +54,9 @@ def enterprise(request, slug_enterprise):  # set enterprise detail
         ctx = {
             'form_enterprise': form_enterprise,
             'enterprise': enterprise,
-            'vacants': vacants
+            'vacants': vacants,
+            'networking': networking,
+            'form_networking': form_networking
         }
 
         return render(request, 'view_enterprise.html', ctx)
@@ -109,7 +116,8 @@ def interview(request, slug_enterprise, vacant_slug, interview_slug):
     interview_form = InterviewForm(instance=current_interview)
     if request.method == 'POST':
         # CREATE
-        interview_form = InterviewForm(request.POST, instance=current_interview)
+        interview_form = InterviewForm(
+            request.POST, instance=current_interview)
         if interview_form.is_valid():
             new_interview = interview_form.save(commit=False)
             new_interview.user_register = request.user
@@ -117,25 +125,68 @@ def interview(request, slug_enterprise, vacant_slug, interview_slug):
             return redirect("vacant", slug_enterprise, vacant_slug)
         else:
             return JsonResponse({"error": "valid2 error"})
+    
 
 
     ctx = {
-        'interview':current_interview,
+        'interview': current_interview,
         'vacant': current_vacant,
         'interview_form': interview_form
     }
 
-    return render(request, "view_interview.html" , ctx)
+    return render(request, "view_interview.html", ctx)
+
 
 def add_interview(request, vacant_slug):
     current_vacant = get_object_or_404(Vacant, slug=vacant_slug)
 
     if "ADD_INTERVIEW" in request.POST:
         query_day = request.POST.get("ADD_INTERVIEW", "")
-        new_interview = Interview.objects.create(vacant=current_vacant, day=query_day)
+        new_interview = Interview.objects.create(
+            vacant=current_vacant, day=query_day)
         new_interview.save()
         return redirect("index")
 
-def networking(request, slug_enterprise):
-    
-    return redirect("enterprise", slug_enterprise)
+
+def networking(request, slug_enterprise, pk):
+    # GET
+    enterprise = get_object_or_404(Enterprise, slug=slug_enterprise)
+    if pk == 0:
+        networking = NetWorking.objects.all()[0]
+    else:
+        networking = NetWorking.objects.get(pk=pk)
+
+
+    form_netwoking = NetWorkingForm(instance=networking)
+
+
+    if request.method == "POST":
+        # POST
+        if "ADD_NETWORKING" in request.POST:
+            status = request.POST.get("status")
+            name = request.POST.get("name")
+            new_networking = NetWorking.objects.create(
+                user_register=request.user, status=status, name=name, enterprise=enterprise)
+            new_networking.save()
+            return redirect("enterprise", slug_enterprise)
+
+        #DELETE
+        elif "DELETE_NETWORKING" in request.POST:
+            current_networking = get_object_or_404(NetWorking, pk=pk)
+            current_networking.delete()
+            return redirect("enterprise", slug_enterprise)
+
+        # # SET
+        else:
+            set_networking = NetWorkingForm(request.POST, instance=networking)
+            if set_networking.is_valid():
+                set_networking.save()
+                return redirect("networking", slug_enterprise, pk)
+
+    ctx = {
+        'enterprise': enterprise,
+        'networking': networking,
+        'form_netwoking': form_netwoking,
+    }
+
+    return render(request, "view_networking.html", ctx)

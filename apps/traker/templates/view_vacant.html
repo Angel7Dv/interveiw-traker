@@ -19,11 +19,14 @@
     {% if vacant.enterprise %}
     <span><a class="text-bold underline" href="{% url 'enterprise' vacant.enterprise.slug %}">
             {{ vacant.enterprise }}/
-        </a></span>
-    {% else %}
-    <span><a class="text-bold underline" href="{% url 'dashboard' %}">add enterprise/ </a> </span>
-    <span><a class="text-bold underline" href="{% url 'vacant' vacant.slug vacant.slug %}">{{vacant}}/ </a></span>
-    {% endif %}
+            {% else %}
+            <span>
+                <a class="text-bold underline" href="{% url 'dashboard' %}">add enterprise/
+                    {% endif %}
+                </a>
+            </span>
+            <span><a class="text-bold underline" href="{% url 'vacant' vacant.slug vacant.slug %}">{{vacant}}/
+                </a></span>
 
 </div>
 
@@ -36,14 +39,15 @@
 
         <div>
             {% if vacant.enterprise %}
-            <a href="{% url 'interview' vacant.enterprise.slug vacant.slug i.slug %}" class="text-xl underline font-bold">
-            {% else %}
-            <a href="{% url 'interview' vacant.slug vacant.slug i.slug %}" class="text-xl underline font-bold">
-            {% endif %}
-                next interview: {{ i.day }}
-                type: {{ i.type }}
-            </a>
-            {% endfor %}
+            <a href="{% url 'interview' vacant.enterprise.slug vacant.slug i.slug %}"
+                class="text-xl underline font-bold">
+                {% else %}
+                <a href="{% url 'interview' vacant.slug vacant.slug i.slug %}" class="text-xl underline font-bold">
+                    {% endif %}
+                    next interview: {{ i.day }}
+                    type: {{ i.type }}
+                </a>
+                {% endfor %}
         </div>
         {% endif %}
 
@@ -76,16 +80,19 @@
             </div>
 
             <div class="flex space-x-2 w-full ">
+                {{ vacant_form.enterprise }}
                 <p class="flex-shrink-0">
                     Enterprise:
                 </p>
-                <a class="text-bold underline" href="{ url 'view_enterprise' enterprise.slug %}">
-                    {% if vacant.enterprise %}
+
+                {% if vacant.enterprise %}
+                <a class="text-bold underline" href="{% url 'enterprise' vacant.enterprise.slug %}">
                     {{ vacant.enterprise }}
                     {% else %}
-                    add enterprise
-                    {% endif %}
-                </a>
+                    <a class="text-bold underline" href="{% url 'index' %}">
+                        add enterprise
+                        {% endif %}
+                    </a>
             </div>
         </div>
 
@@ -115,10 +122,11 @@
 
 <script>
     const enterprise_form = document.getElementById("enterprise_form")
-    for (let i of Array(6).keys()) {
+    for (let i of Array(7).keys()) {
         enterprise_form[i].className = "w-full bg-gray-300 text-gray-900 font-semibold leading-none focus:outline-none bg-transparent border-b border-black mb-16"
     }
     enterprise_form[1].classList.add("underline", "text-2xl", "font-bold")
+    enterprise_form[3].className = "hidden"
 </script>
 
 

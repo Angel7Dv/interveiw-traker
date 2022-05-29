@@ -1,10 +1,11 @@
 from django.urls import path
-from .views import dashboard, vacant, enterprise, interview, add_interview
+from .views import dashboard, vacant, enterprise, interview, add_interview, networking
 urlpatterns = [
     path('', dashboard, name="dashboard"), 
 
 
     path(r'<str:slug_enterprise>/', enterprise, name="enterprise"),
+    path(r'<str:slug_enterprise>/networking/<int:pk>/', networking, name="networking"),
     
     path(r'add_interview/<str:vacant_slug>/', add_interview, name="add_interview"),
 

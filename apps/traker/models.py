@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from .utils import get_original_slug
 from users.models import User
 
 # TYPES
@@ -41,9 +42,7 @@ class Enterprise(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        slug = slugify(f'{self.name}')
-        queryset = Enterprise.objects.all().filter(slug__iexact=slug).count()
-        self.slug = slugify(f'{self.name}{queryset}')
+        self.slug = slugify(f'{self.name}')
         super(Enterprise, self).save(*args, **kwargs)
 
 
@@ -65,21 +64,8 @@ class Vacant(models.Model):
         return self.roll_Name
 
     def save(self, *args, **kwargs):
-        original_slug = slugify(self.roll_Name) # creacion automatica apartir del titulo
-
-        # LOGICA PARA LAS URLS UNICAS        
-        queryset = Vacant.objects.all().filter(slug__iexact=original_slug).count() 
-            # "Busca si hay otro slug que conincida con el mismo original_slug"
-        count = 1
-        slug = original_slug
-        # (queryset) si encuentra otro con este mismo slug
-        while(queryset): 
-            slug = original_slug + '-' + str(count)
-            count += 1
-            # vuelve a hacer la verificacion
-            queryset = Vacant.objects.all().filter(slug__iexact=slug).count() 
-        self.slug = slug
-        
+        original_slug = slugify(self.roll_Name)
+        self.slug = get_original_slug(original_slug, Vacant)
         super(Vacant, self).save(*args, **kwargs)
 
 
@@ -101,7 +87,9 @@ class Interview(models.Model):
         return f'interview {self.vacant.enterprise} {self.day}'
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(f'interview{self.vacant.enterprise}{self.day}')
+        original_slug = slugify(f'interview {self.vacant.enterprise} {self.day}')
+        
+        self.slug = get_original_slug(original_slug, Interview)
         super(Interview, self).save(*args, **kwargs)
 
 
@@ -117,12 +105,12 @@ class NetWorking(models.Model):
     interviewer = models.ForeignKey(
         Interview, related_name="interviewer", null=True, blank=True, on_delete=models.CASCADE)
 
-    state = models.CharField(max_length=100, null=True,
+    position = models.CharField(max_length=100,blank=True)
+    status = models.CharField(max_length=100, null=True,
                              blank=True, choices=networking_status.choices)
     enterprise_opinion = models.TextField(blank=True)
     interests = models.TextField(blank=True)
     feed_back = models.TextField(blank=True)
-    position = models.TextField(blank=True)
 
     slug = models.CharField(max_length=100, unique=True, null=True, blank=True)
 
@@ -130,7 +118,8 @@ class NetWorking(models.Model):
         return f'{self.enterprise} {self.name}'
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(f'{self.enterprise} {self.name}')
+        original_slug = slugify(f'{self.name} {self.enterprise}')
+        self.slug =  get_original_slug(original_slug, NetWorking)
         super(NetWorking, self).save(*args, **kwargs)
 
 

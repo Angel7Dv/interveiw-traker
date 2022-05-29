@@ -21,7 +21,7 @@ class InterviewForm(forms.ModelForm):
 class NetWorkingForm(forms.ModelForm):
 	class Meta:
 		model = NetWorking
-		fields = '__all__'
+		fields = ['name','position','status','enterprise_opinion','interests','feed_back']
 
 class SocialNetworksForm(forms.ModelForm):
 	class Meta:

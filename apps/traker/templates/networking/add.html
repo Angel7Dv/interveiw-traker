@@ -1,0 +1,74 @@
+<div class="flex flex-col">
+    <h1 class="text-center">networking</h1>
+    {% if enterprise.networking %}
+
+    {% for i in networking %}
+    <div class="flex justify-between">
+
+        <a class="text-xl underline font-bold" href="{% url 'networking' enterprise.slug i.pk %}">
+            {{i.name}}
+
+            {% if i.status == 'information' %}
+            <span class="text-teal-700">
+                {% elif i.status == 'well_comunication' %}
+                <span class="text-sky-700">
+                    {% elif i.status == 'ghosting' %}
+                    <span class="text-red-700">
+                        {% else %}
+                        <span class="text-gray-700">
+                            {% endif %}
+                            {{i.status}}
+                        </span>
+
+        </a>
+
+        <form class="flex justify-end" action="{% url 'networking' enterprise.slug i.pk %}" method="POST">
+            {% csrf_token %}
+            <button name="DELETE_NETWORKING" class="bg-red-500 px-2 border rounded-2xl"> delete</button>
+        </form>
+    </div>
+
+    {% endfor %}
+    {% endif %}
+
+    <button id="see"> add</button>
+    <div id="boxhidden" class="hidden">
+        <div class="fixed inset-x-[20%] inset-y-[20%] flex justify-center">
+            <div class="border border-black bg-gray-500 w-auto h-auto px-8 p-2">
+                <div class="flex justify-end">
+                    <button class="mb-2 px-2 bg-red-500 rounded-lg text-white" id="close">close</button>
+                </div>
+                <form id="form" method="POST" action="{% url 'networking' enterprise.slug 0 %}">
+                    {% csrf_token %}
+                    {{form_networking.name}}
+                    {{form_networking.status}}
+                    <button name="ADD_NETWORKING"> enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    const see = document.getElementById("see")
+    const close = document.getElementById("close")
+    const boxhidden = document.getElementById("boxhidden")
+    const form = document.getElementById("form")
+
+    see.onclick = function () {
+        boxhidden.classList.toggle("hidden")
+    }
+
+    close.onclick = function () {
+        boxhidden.classList.toggle("hidden")
+    }
+
+    for (var field of Array(4).keys()) { // num of fields should be exact
+        form[field].className = "w-[100%] leading-none text-gray-50 p-3 focus:outline-none focus:border-blue-700 border-0 bg-gray-800 rounded mt-5"
+        form[field].placeholder = form[field].name
+    }
+
+
+</script>

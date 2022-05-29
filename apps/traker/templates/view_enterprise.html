@@ -25,14 +25,27 @@
 
 
 <div class="mt-4 mx-16">
-    <div class="mb-5">
+    <div class="flex justify-between">
+    <div class="mb-5 flex flex-col">
         {% for i in vacants %}
-        <a href="{% url 'vacant' i.enterprise.slug i.slug %}" class="text-xl underline font-bold">
-            vacant: {{ i.roll_Name }}
-            status: {{ i.state }}
-        </a>
+        <div>
+
+            vacant:
+            <a href="{% url 'vacant' i.enterprise.slug i.slug %}" class="text-xl underline font-bold">
+                {{ i.roll_Name }}
+                status: {{ i.status }}
+            </a>
+        </div>
         {% endfor %}
     </div>
+
+    <div class="text-left flex flex-col">
+
+        {% include './networking/add.html' %}
+    </div>
+
+
+</div class="mt-18">
 
     <form id="enterprise_form" method="POST" action="" class="flex flex-col">
         {% csrf_token %}
@@ -81,7 +94,6 @@
 </div>
 
 
-{% extends './networking/index.html' %}
 
 <script>
     const enterprise_form = document.getElementById("enterprise_form")
