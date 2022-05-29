@@ -31,12 +31,12 @@
     {% endfor %}
     {% endif %}
 
-    <button id="see"> add</button>
+    <button id="see" onclick="showing('boxhidden')"> add</button>
     <div id="boxhidden" class="hidden">
         <div class="fixed inset-x-[20%] inset-y-[20%] flex justify-center">
-            <div class="border border-black bg-gray-500 w-auto h-auto px-8 p-2">
+            <div class="border border-black bg-gray-600 border w-auto h-auto px-8 p-2">
                 <div class="flex justify-end">
-                    <button class="mb-2 px-2 bg-red-500 rounded-lg text-white" id="close">close</button>
+                    <button class="mb-2 px-2 bg-red-500 rounded-lg text-white" onclick="showing('boxhidden')">close</button>
                 </div>
                 <form id="form" method="POST" action="{% url 'networking' enterprise.slug 0 %}">
                     {% csrf_token %}
@@ -52,23 +52,13 @@
 </div>
 
 <script>
-    const see = document.getElementById("see")
-    const close = document.getElementById("close")
-    const boxhidden = document.getElementById("boxhidden")
-    const form = document.getElementById("form")
-
-    see.onclick = function () {
-        boxhidden.classList.toggle("hidden")
-    }
-
-    close.onclick = function () {
-        boxhidden.classList.toggle("hidden")
-    }
-
+    const form = document.getElementById("form");
     for (var field of Array(4).keys()) { // num of fields should be exact
         form[field].className = "w-[100%] leading-none text-gray-50 p-3 focus:outline-none focus:border-blue-700 border-0 bg-gray-800 rounded mt-5"
         form[field].placeholder = form[field].name
     }
+
+
 
 
 </script>

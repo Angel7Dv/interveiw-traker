@@ -93,17 +93,32 @@ class Interview(models.Model):
         super(Interview, self).save(*args, **kwargs)
 
 
+class SocialNetworks(models.Model):
+    facebook = models.URLField(null=True, blank=True)
+    twitter = models.URLField(null=True, blank=True)
+    instagram = models.URLField(null=True, blank=True)
+    linkedin = models.URLField(null=True, blank=True)
+    
+    web = models.URLField(null=True, blank=True)
+
+    tlf = models.IntegerField(null=True, blank=True)
+    mail = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.networking} SocialNetworks'
+
+
 class NetWorking(models.Model):
+    name = models.CharField(max_length=100)
+
+
     user_register = models.ForeignKey(
         User, null=True, blank=True, related_name="networking", on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
     enterprise = models.ForeignKey(
         Enterprise, related_name="networking", null=True, blank=True, on_delete=models.CASCADE)
 
-
-    is_interviewer = models.BooleanField(default=False)
-    interviewer = models.ForeignKey(
-        Interview, related_name="interviewer", null=True, blank=True, on_delete=models.CASCADE)
+    social_network = models.OneToOneField(
+        SocialNetworks, related_name="networking", null=True, blank=True, on_delete=models.CASCADE)
 
     position = models.CharField(max_length=100,blank=True)
     status = models.CharField(max_length=100, null=True,
@@ -123,13 +138,3 @@ class NetWorking(models.Model):
         super(NetWorking, self).save(*args, **kwargs)
 
 
-class SocialNetworks(models.Model):
-    facebook = models.URLField(null=True, blank=True)
-    twitter = models.URLField(null=True, blank=True)
-    instagram = models.URLField(null=True, blank=True)
-    linkedin = models.URLField(null=True, blank=True)
-    tlf = models.IntegerField(null=True, blank=True)
-    mail = models.IntegerField(null=True, blank=True)
-
-    def __str__(self):
-        return f'SocialNetworks {self.enterprise} {self.enterprise}'

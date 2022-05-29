@@ -5,7 +5,7 @@
 
 
 {% block content %}
-<h1 class="text-center text-5xl mb-5"> 
+<h1 class="text-center text-5xl mb-5">
     <span class="text-red-900">{{interview}} </span>
 
 </h1>
@@ -31,66 +31,99 @@
             </a>
             {% endif %}
         </a>
-        
+
     </span>
+</div>
+
+<div class="my-5">
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form_social_network.as_p}}
+
+
+    </form>
 </div>
 
 <div class="mt-4 mx-16">
     <form id="enterprise_form" method="POST" action="" class="flex flex-col">
 
         {% csrf_token %}
+        {{ interview_form.vacant}}
+</div>
+
+<div class="flex space-x-10">
 
 
-        <div class="flex mt-5">
-            <p class="underline text-2xl font-bold mr-8">Enterprise:</p>
-            vacant = {{ interview.vacant}}
-            {{ interview_form.vacant}}
-        </div>
+    <div class="flex flex-shrink-0">
 
-        <div class="flex space-x-10">
-            <div class="flex space-x-2 w-full">
-                <p class="flex-shrink-0">
-                    day of interview:
-                </p>
-                {{ interview_form.day}}
+        <p class="flex-shrink-0">
+            day of interview:
+        </p>
+        <div>
+
+            <div class="flex">
+                <div id="day">
+                    {{ interview.day}}
+                </div>
+
+                <div id="day_form" class="hidden">
+                    {{ interview_form.day}}
+                </div>
+
+
+                <a onclick="showing('day'), showing('day_form')" class="bg-red-500 px-2 flex-shrink-0">edit</a>
             </div>
 
-            <div class="flex space-x-2 w-full ">
-                <p class="flex-shrink-0">
-                    type of interview:
-                </p>
-                {{ interview_form.type}}
-            </div>
         </div>
+    </div>
+
+    <div class="flex space-x-2 w-full ">
+        <p class="flex-shrink-0">
+            type of interview:
+        </p>
+        {{ interview_form.type}}
+    </div>
+</div>
 
 
 
-        <div class="flex flex-col flex-shrink-0">
-            <p class="underline text-2xl font-bold">preparation</p>
-            {{ interview_form.preparation}}
-        </div>
+<div class="flex flex-col flex-shrink-0">
+    <p class="underline text-2xl font-bold">preparation</p>
+    {{ interview_form.preparation}}
+</div>
 
-        <div class="flex flex-col flex-shrink-0">
-            <p class="underline text-2xl font-bold">Feedback</p>
-            {{ interview_form.feed_back}}
-        </div>
+<div class="flex flex-col flex-shrink-0">
+    <p class="underline text-2xl font-bold">Feedback</p>
+    {{ interview_form.feed_back}}
+</div>
 
-        <div class="bg-teal-900 text-2xl text-white text-center">
-            <button type="submit">Save</button>
-        </div>
+<div class="bg-teal-900 text-2xl text-white text-center">
+    <button type="submit">Save</button>
+</div>
 
-    </form>
+</form>
 
 
 </div>
 
 <script>
     const enterprise_form = document.getElementById("enterprise_form")
+    const day = document.getElementById("day")
+
     for (let i of Array(6).keys()) {
         enterprise_form[i].className = "w-full bg-gray-300 text-gray-900 font-semibold leading-none focus:outline-none bg-transparent border-b border-black mb-16"
     }
-    enterprise_form[1].className = "hidden"
-    enterprise_form[2].type = "datetime-local"
+    enterprise_form[1].className = "hidden" // vacant
+
+    // change datetime to datetime-local input
+    let date = enterprise_form[2].value
+    date = date.replace(" ", "T").slice(0, -3)
+    enterprise_form[2].type = "datetime-local" // date time
+    enterprise_form[2].value = date
+    enterprise_form[2].className = ""
+
+    // console.log(enterprise_form[2].value == date)
+
 
 </script>
 
