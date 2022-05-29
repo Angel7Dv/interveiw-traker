@@ -110,8 +110,6 @@ class SocialNetworks(models.Model):
 
 class NetWorking(models.Model):
     name = models.CharField(max_length=100)
-
-
     user_register = models.ForeignKey(
         User, null=True, blank=True, related_name="networking", on_delete=models.CASCADE)
     enterprise = models.ForeignKey(
