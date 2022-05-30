@@ -66,13 +66,10 @@ def vacant(request, slug_enterprise, vacant_slug):
     vacant = get_object_or_404(Vacant, slug=vacant_slug)
     vacant_form = VacantForm(instance=vacant)
     interviews = Interview.objects.filter(vacant=vacant)
-
-
     # DELETE
     if request.method == 'DELETE':
         vacant.delete()
         return JsonResponse({'success': "delete"}), redirect("index")
-
     elif request.method == 'POST':
         # CREATE ENTERPRISE
         if 'ADD_ENTERPRISE' in request.POST:
@@ -134,32 +131,38 @@ def interview(request, slug_enterprise, vacant_slug, interview_slug):
 
 
 def add_interview(request, vacant_slug):
-    current_vacant = get_object_or_404(Vacant, slug=vacant_slug)
 
     if "ADD_INTERVIEW" in request.POST:
+        current_vacant = get_object_or_404(Vacant, slug=vacant_slug)
         query_day = request.POST.get("ADD_INTERVIEW", "")
         new_interview = Interview.objects.create(
             vacant=current_vacant, day=query_day)
         new_interview.save()
-        return redirect("index")
+        return redirect("vacant", current_vacant.enterprise.slug, current_vacant.slug)
+
+    if "DELETE_INTERVIEW" in request.POST:
+        interview_slug = vacant_slug
+        current_interview = get_object_or_404(Interview, slug=interview_slug)
+        current_vacant = get_object_or_404(Vacant, slug=current_interview.vacant.slug)
+        current_interview.delete()
+        return redirect("vacant", current_vacant.enterprise.slug, current_vacant.slug)
+        #return JsonResponse({"success": "iten delete"}), redirect("vacant", current_vacant.enterprise.slug, current_vacant.slug)
 
 
 def networking(request, slug_enterprise, pk):
     enterprise = get_object_or_404(Enterprise, slug=slug_enterprise)
-
     try:
         networking = NetWorking.objects.get(pk=pk)
     except:
         networking = NetWorking.objects.create(name="algo")
     
-    print(networking)
-
     form_netwoking = NetWorkingForm(instance=networking)
-
-    # social_network = SocialNetworks.objects.get_or_create(networking=networking)
-
-    # form_social_network = SocialNetworksForm(instance=social_network)
     
+    social_networks = SocialNetworks.objects.get(user=networking)
+
+    form_social_network = SocialNetworksForm(instance=social_networks)
+    
+    print("here")
     if request.method == "POST":
         # POST
         if "ADD_NETWORKING" in request.POST:
@@ -167,7 +170,7 @@ def networking(request, slug_enterprise, pk):
             name = request.POST.get("name")
             new_networking = NetWorking.objects.create(
                 user_register=request.user, status=status, name=name, enterprise=enterprise)
-            new_networking.save()
+            social_networks = SocialNetworks.objects.create(user=new_networking)
             return redirect("enterprise", slug_enterprise)
         
         elif "SOCIAL_NETWORK" in request.POST:
@@ -175,7 +178,6 @@ def networking(request, slug_enterprise, pk):
             if set_networking.is_valid():
                 set_networking.save()
                 return redirect("networking", slug_enterprise, pk)
-
         #DELETE
         elif "DELETE_NETWORKING" in request.POST:
             current_networking = get_object_or_404(NetWorking, pk=pk)
@@ -183,6 +185,14 @@ def networking(request, slug_enterprise, pk):
             return redirect("enterprise", slug_enterprise)
 
         # SET
+        elif "SET_SOCIALS_NETWORKING" in request.POST:
+            print("here2")
+
+            set_socials_networking = SocialNetworksForm(request.POST, instance=social_networks)
+            if set_socials_networking.is_valid():
+                set_socials_networking.save()
+                return redirect("networking", slug_enterprise, pk)
+        
         else:
             set_networking = NetWorkingForm(request.POST, instance=networking)
             if set_networking.is_valid():
@@ -193,7 +203,8 @@ def networking(request, slug_enterprise, pk):
         'enterprise': enterprise,
         'networking': networking,
         'form_netwoking': form_netwoking,
-        # 'form_social_network':form_social_network
+        'social_networks':social_networks,
+        'form_social_network':form_social_network
     }
 
     return render(request, "view_networking.html", ctx)

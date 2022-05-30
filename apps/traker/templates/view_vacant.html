@@ -1,58 +1,46 @@
 {% extends './base/index.html' %}
 
 <!-- trae a main como padre -->
-{% block title %}Vacant detail asdas{% endblock %}
+{% block title %}Vacant detail{% endblock %}
+
+{% block description %}vacant: {{vacant}} {{vacant.enterprise}}{% endblock %}
 
 
 {% block content %}
-<h1 class="text-center text-5xl mb-5">
-    <span class="text-red-900">{{ vacant }} </span>
-    Vacant Description
-</h1>
 
-<div class="mx-12 flex space-x-2 text-red-700">
-    <span class="mr-4">
-        path
-    </span>
-
-    <span><a class="text-bold underline" href="{% url 'dashboard' %}">home/ </a> </span>
-    {% if vacant.enterprise %}
-    <span><a class="text-bold underline" href="{% url 'enterprise' vacant.enterprise.slug %}">
-            {{ vacant.enterprise }}/
-            {% else %}
-            <span>
-                <a class="text-bold underline" href="{% url 'dashboard' %}">add enterprise/
-                    {% endif %}
-                </a>
-            </span>
-            <span><a class="text-bold underline" href="{% url 'vacant' vacant.slug vacant.slug %}">{{vacant}}/
-                </a></span>
-
-</div>
 
 
 
 <div class="mt-4 mx-16">
-    <div class="my-5 border border-black flex">
+    <div class="my-5 border border-black flex justify-between">
         {% if vacant.interview %}
-        {% for i in interviews %}
+        <div class="flex flex-col space-y-5">
 
-        <div>
-            {% if vacant.enterprise %}
-            <a href="{% url 'interview' vacant.enterprise.slug vacant.slug i.slug %}"
-                class="text-xl underline font-bold">
-                {% else %}
-                <a href="{% url 'interview' vacant.slug vacant.slug i.slug %}" class="text-xl underline font-bold">
+            {% for i in interviews %}
+                <div class="flex">
+                    {% if vacant.enterprise %}
+                        <a href="{% url 'interview' vacant.enterprise.slug vacant.slug i.slug %}"
+                        class="text-xl underline font-bold">
+                    {% else %}
+                        <a href="{% url 'interview' vacant.slug vacant.slug i.slug %}" class="text-xl underline font-bold">
                     {% endif %}
-                    next interview: {{ i.day }}
-                    type: {{ i.type }}
-                </a>
-                {% endfor %}
+                        next interview: {{ i.day }}
+                        type: {{ i.type }}
+                    </a>    
+                    
+                    <form class="mx-2 bg-red-500 rounded-xl border-white" 
+                    action="{% url 'add_interview' i.slug %}" method="post">
+                    {% csrf_token%}
+                        <button name="DELETE_INTERVIEW">Delete</button>
+                    </form>
+                </div>
+            {% endfor %}
         </div>
+
         {% endif %}
 
-        <form action="{% url 'add_interview' vacant.slug %}" method="post">
-            <span href="#" class="text-xl underline font-bold">
+        <form class="flex flex-col" action="{% url 'add_interview' vacant.slug %}" method="post">
+            <span href="#" class="text-xl underline font-bold mb-2">
                 add interview
             </span>
             {% csrf_token %}
@@ -63,14 +51,13 @@
     </div>
 
     <form id="enterprise_form" method="POST" action="" class="flex flex-col">
-        {% csrf_token %} sadsad
-        <div class="flex">
-
-            <p class="underline text-2xl font-bold  mr-8 flex-shrink-0">Roll Name:</p>
-            {{ vacant_form.roll_Name}}
-        </div>
-
+        {% csrf_token %}
+        
         <div class="flex space-x-10">
+            <div class="flex space-x-2 w-full">
+                <p class="underline text-2xl font-bold  mr-8 flex-shrink-0">Roll Name:</p>
+                {{ vacant_form.roll_Name}}
+            </div>
 
             <div class="flex space-x-2 w-full">
                 <p class="flex-shrink-0">

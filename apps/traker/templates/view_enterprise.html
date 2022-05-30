@@ -3,25 +3,9 @@
 <!-- trae a main como padre -->
 {% block title %}Enterprise Detail{% endblock %}
 
+{% block description %}{{enterprise}}{% endblock %}
 
 {% block content %}
-<h1 class="text-center text-5xl mb-5">  Enterprise Description
-    <span class="text-red-900">{{enterprise}} </span>
-   
-</h1>
-
-<div class="mx-12">
-    <span class="mr-4">
-        path
-    </span>
-    <span><a class="text-bold underline" href="{% url 'dashboard' %}">home/</a> </span>
-    <span>
-        <a class="text-bold underline" href="{% url 'enterprise' enterprise.slug %}">
-            {{enterprise}}/
-        </a>
-    </span>
-</div>
-
 
 
 <div class="mt-4 mx-16">
@@ -29,18 +13,15 @@
     <div class="mb-5 flex flex-col">
         {% for i in vacants %}
         <div>
-
             vacant:
             <a href="{% url 'vacant' i.enterprise.slug i.slug %}" class="text-xl underline font-bold">
-                {{ i.roll_Name }}
-                status: {{ i.status }}
+                {{ i.roll_Name }} status:{{ i.status }}
             </a>
         </div>
         {% endfor %}
     </div>
 
     <div class="text-left flex flex-col">
-
         {% include './networking/add.html' %}
     </div>
 
@@ -97,11 +78,9 @@
 
 <script>
     const enterprise_form = document.getElementById("enterprise_form")
-
     for (let i of Array(7).keys()) {
         enterprise_form[i].className = "w-full bg-gray-300 text-gray-900 font-semibold leading-none focus:outline-none bg-transparent border-b border-black mb-16"
     }
-
     enterprise_form[1].classList.add("underline", "text-2xl", "font-bold")
 
 </script>

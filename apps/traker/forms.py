@@ -26,4 +26,6 @@ class NetWorkingForm(forms.ModelForm):
 class SocialNetworksForm(forms.ModelForm):
 	class Meta:
 		model = SocialNetworks
-		fields = '__all__'
+		fields = ['facebook', 'twitter','instagram', 'linkedin', 'web', 'tlf', 'mail',]
+
+	

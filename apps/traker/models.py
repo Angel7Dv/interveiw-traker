@@ -51,7 +51,7 @@ class Vacant(models.Model):
         User, null=True, blank=True, related_name="vacants", on_delete=models.CASCADE)
     roll_Name = models.CharField(max_length=100)
     status = models.CharField(max_length=100, null=True,
-                             blank=True, choices=vacant_status.choices)
+                              blank=True, choices=vacant_status.choices)
     enterprise = models.ForeignKey(
         Enterprise, related_name="vacante", null=True, blank=True, on_delete=models.CASCADE)
     roll_description = models.TextField(blank=True)
@@ -87,25 +87,11 @@ class Interview(models.Model):
         return f'interview {self.vacant.enterprise} {self.day}'
 
     def save(self, *args, **kwargs):
-        original_slug = slugify(f'interview {self.vacant.enterprise} {self.day}')
-        
+        original_slug = slugify(
+            f'interview {self.vacant.enterprise} {self.day}')
+
         self.slug = get_original_slug(original_slug, Interview)
         super(Interview, self).save(*args, **kwargs)
-
-
-class SocialNetworks(models.Model):
-    facebook = models.URLField(null=True, blank=True)
-    twitter = models.URLField(null=True, blank=True)
-    instagram = models.URLField(null=True, blank=True)
-    linkedin = models.URLField(null=True, blank=True)
-    
-    web = models.URLField(null=True, blank=True)
-
-    tlf = models.IntegerField(null=True, blank=True)
-    mail = models.IntegerField(null=True, blank=True)
-
-    def __str__(self):
-        return f'{self.networking} SocialNetworks'
 
 
 class NetWorking(models.Model):
@@ -115,12 +101,9 @@ class NetWorking(models.Model):
     enterprise = models.ForeignKey(
         Enterprise, related_name="networking", null=True, blank=True, on_delete=models.CASCADE)
 
-    social_network = models.OneToOneField(
-        SocialNetworks, related_name="networking", null=True, blank=True, on_delete=models.CASCADE)
-
-    position = models.CharField(max_length=100,blank=True)
+    position = models.CharField(max_length=100, blank=True)
     status = models.CharField(max_length=100, null=True,
-                             blank=True, choices=networking_status.choices)
+                              blank=True, choices=networking_status.choices)
     enterprise_opinion = models.TextField(blank=True)
     interests = models.TextField(blank=True)
     feed_back = models.TextField(blank=True)
@@ -132,7 +115,20 @@ class NetWorking(models.Model):
 
     def save(self, *args, **kwargs):
         original_slug = slugify(f'{self.name} {self.enterprise}')
-        self.slug =  get_original_slug(original_slug, NetWorking)
+        self.slug = get_original_slug(original_slug, NetWorking)
         super(NetWorking, self).save(*args, **kwargs)
 
 
+class SocialNetworks(models.Model):
+    user = models.OneToOneField(
+        NetWorking, related_name="social_networks", null=True, blank=True, on_delete=models.CASCADE)
+    facebook = models.URLField(null=True, blank=True)
+    twitter = models.URLField(null=True, blank=True)
+    instagram = models.URLField(null=True, blank=True)
+    linkedin = models.URLField(null=True, blank=True)
+    web = models.URLField(null=True, blank=True)
+    tlf = models.CharField(null=True, blank=True, max_length=30)
+    mail = models.EmailField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.user} SocialNetworks'

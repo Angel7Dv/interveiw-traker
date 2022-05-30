@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-# sys.path.insert(0, os.path.join(BASE_DIR, 'apps')) # allow apps in apps dir
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps')) # allow apps in apps dir
 
 INSTALLED_APPS = [
     'django.contrib.admin',
