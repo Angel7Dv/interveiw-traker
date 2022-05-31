@@ -17,7 +17,7 @@ def register_user(request):
         if form.is_valid():            
             user = form.save()          
             login(request, user)    
-            return redirect('index')
+            return redirect('dashboard')
     else:
         form = CreateUserForm()
     ctx = {'form':form}
