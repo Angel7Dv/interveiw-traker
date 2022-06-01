@@ -22,18 +22,24 @@
 
         <!-- PATH -->
         <header class="mb-2">
-            <h1 class="font-semibold text-4xl drop-shadow-2xl">Title</h1>
-            <div>
-                <p>
-                    <a href="{% url 'dashboard' %}" class="hover:underline">home</a> /
-                    {% if vacant %}
-                    <a href="{% url 'vacant' vacant.slug %}" class="hover:underline">vacant</a> /
+            <h1 class=" text-center text-7xl font-bold drop-shadow-2xl mb-10 text-indigo-600">
+                {% block name %}{% endblock %}
+            </h1>
+
+            <div class="-mt-10 sm:-mt-24">
+
+                
+                <h1 class="font-semibold text-4xl drop-shadow-2xl">Title</h1>
+                <div>
+                    <p>
+                        <a href="{% url 'dashboard' %}" class="hover:underline">home</a> /
+                        {% if vacant %}
+                        <a href="{% url 'vacant' vacant.slug %}" class="hover:underline">vacant</a> /
                     {% endif %}
                 </p>
             </div>
-            <h1 class="-mt-24 text-center text-7xl font-bold drop-shadow-2xl mb-10 text-indigo-600">
-                {% block name %}{% endblock %}
-            </h1>
+        </div>
+            
         </header>
         <!-- PATH -->
 

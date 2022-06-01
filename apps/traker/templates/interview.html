@@ -1,4 +1,4 @@
-{% extends '../base/index.html' %}
+{% extends './base/index.html' %}
 
 {% block title %}Vacants resgister{% endblock %}
 
@@ -7,18 +7,6 @@
 
 {% block content %}
 
-<div class="grid grid-cols-2 gap-4">
-
-    <!-- Add Interview -->
-    {% include './interviews.html' %}
-
-    <!-- Add Interview -->
-
-
-    <!-- Networking -->
-    {#% include './networking.html' %#}
-
-</div>
 
 <div class="py-5 border-b">
 
@@ -27,29 +15,23 @@
         <!-- Interview Data -->
 
         {% csrf_token %}
-        <div class="grid grid-cols-3 gap-4 mb-5">
+        <div class="grid grid-cols-2 gap-4 mb-5">
+
+
 
             <div class="text-md font-semibold text-gray-700 flex flex-col w-full bg-zinc-50 rounded-md shadow-xl p-4 ">
                 <h2 class="text-gray-700 text-lg font-bold leading-none hover:underline hover:cursor-pointer">
-                    Roll Name:
+                    Type:
                 </h2>
-                {{vacant_form.roll_Name }}
+                {{interview_form.type}}
 
             </div>
 
             <div class="text-md font-semibold text-gray-700 flex flex-col w-full bg-zinc-50 rounded-md shadow-xl p-4 ">
                 <h2 class="text-gray-700 text-lg font-bold leading-none hover:underline hover:cursor-pointer">
-                    Status:
+                    day:
                 </h2>
-                {{vacant_form.status}}
-
-            </div>
-
-            <div class="text-md font-semibold text-gray-700 flex flex-col w-full bg-zinc-50 rounded-md shadow-xl p-4 ">
-                <h2 class="text-gray-700 text-lg font-bold leading-none hover:underline hover:cursor-pointer">
-                    email:
-                </h2>
-                {{vacant_form.email}}
+                {{interview_form.day}}
 
             </div>
 
@@ -60,9 +42,9 @@
         <div class="grid  grid-cols-1 md:grid-cols-2 gap-4 ">
             <div class="text-md font-semibold text-gray-700 flex flex-col w-full bg-zinc-50 rounded-md shadow-xl p-4 ">
                 <label class="text-xl" for="summary">
-                    Roll description:
+                    Preparation:
                 </label>
-                {{ vacant_form.roll_description}}
+                {{ interview_form.preparation}}
 
 
             </div>
@@ -70,9 +52,9 @@
 
             <div class="text-md font-semibold text-gray-700 flex flex-col w-full bg-zinc-50 rounded-md shadow-xl p-4 ">
                 <label class="text-xl" for="summary">
-                    Strategy:
+                    Feed Back:
                 </label>
-                {{vacant_form.strategy}}
+                {{interview_form.feed_back}}
 
 
             </div>
@@ -100,7 +82,7 @@
             form_vacant
         )
 
-        for (let i of Array(9).keys()) {
+        for (let i of Array(6).keys()) {
             form_vacant[i].classList = "w-full bg-transparent p-2 mx-2 focus:outline-none"
         }
 
@@ -109,10 +91,7 @@
 
  
 
-    {#% include './enterprise.html' %#}
 
-    {% include './networking_form.html' %}
-    {% include './interview_form.html' %}
 
 
 </div>

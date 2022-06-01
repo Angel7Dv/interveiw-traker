@@ -27,12 +27,12 @@
                     </h3>
                 </div>
        
-                <form id="networkingform" class="flex flex-col" method="POST"
-                    action="{% url 'post_interview' vacant.slug %}">
+                <form id="networkingform" class="flex flex-col text-white font-bold text-xl" method="POST"
+                    action="{% url 'post_networking' vacant.slug %}">
 
                     {% csrf_token %}
-                    <input class="my-4 text-center bg-gray-600 text-white font-bold text-xl" type="text" name="ADD_NETWORKING" id="">
-                    <input class="my-4 text-center bg-gray-600 text-white font-bold text-xl" type="text"  id="">
+                    <input class="my-4 bg-gray-600 " type="text" name="name" placeholder="name" id="">
+                    <input class="my-4 bg-gray-600 " type="email" name="main_social" placeholder="main_social" id="">
                     <input class="bg-indigo-600 px-3 font-semibold text-white hover:cursor-pointer mt-2 rounded-md" type="submit" name="ADD_NETWORKING" value="enviar">
                 </form>
 

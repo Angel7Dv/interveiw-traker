@@ -16,7 +16,8 @@ class EnterpriseForm(forms.ModelForm):
 class InterviewForm(forms.ModelForm):
 	class Meta:
 		model = Interview
-		fields = '__all__'
+		fields = ['type', 'day', 'preparation', 'feed_back']
+	
 
 class NetWorkingForm(forms.ModelForm):
 	class Meta:
@@ -29,3 +30,4 @@ class NetWorkingForm(forms.ModelForm):
 # 		fields = ['facebook', 'twitter','instagram', 'linkedin', 'web', 'tlf', 'mail',]
 
 	
+

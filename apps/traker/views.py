@@ -78,10 +78,10 @@ def vacant(request, vacant_slug):
 
 
 
-def interview(request, vacant_slug, interview_slug):
+def interview(request, vacant_slug, pk):
     # current_enterprise = get_object_or_404(Enterprise, slug=slug_enterprise)
     current_vacant = get_object_or_404(Vacant, slug=vacant_slug)
-    current_interview = get_object_or_404(Interview, slug=interview_slug)
+    current_interview = get_object_or_404(Interview, pk=pk)
     interview_form = InterviewForm(instance=current_interview)
     
 
@@ -89,13 +89,11 @@ def interview(request, vacant_slug, interview_slug):
         # PUT
         interview_form = InterviewForm(
             request.POST, instance=current_interview)
-
-
         if interview_form.is_valid():
             new_interview = interview_form.save(commit=False)
             new_interview.user_register = request.user
             new_interview.save()
-            return redirect("interview", vacant_slug, current_interview.slug)
+            return redirect("interview", vacant_slug, pk)
         else:
             return JsonResponse({"error": "valid2 error"})
 
@@ -106,7 +104,7 @@ def interview(request, vacant_slug, interview_slug):
         'interview_form': interview_form
     }
 
-    return render(request, "view_interview.html", ctx)
+    return render(request, "interview.html", ctx)
 
 
 def post_interview(request, vacant_slug):
@@ -193,21 +191,23 @@ def networking(request, slug_enterprise, pk):
 
 
 def post_networking(request, vacant_slug):
+    current_vacant = get_object_or_404(Vacant, slug=vacant_slug)
 
-    if "ADD_INTERVIEW" in request.POST:
+    if "ADD_NETWORKING" in request.POST:
         current_networking = get_object_or_404(NetWorking, slug=vacant_slug)
-        query_day = request.POST.get("ADD_INTERVIEW", "")    
-        new_interview = Interview.objects.create(
-            vacant=current_vacant, day=query_day)
-        new_interview.save()
-        return redirect("vacant", current_vacant.slug)
+        name = request.POST.get("name", "")    
+        main_social = request.POST.get("main_social", "")    
 
-    if "DELETE_INTERVIEW" in request.POST:
+        new_networking = NetWorking.objects.create(
+            vacant=current_vacant, name=name, main_social=main_social)
+        new_networking.save()
+        return redirect("vacant", vacant_slug)
+
+    if "DELETE_NETWORKING" in request.POST:
         interview_slug = vacant_slug
         current_networking = get_object_or_404(NetWorking, slug=interview_slug)
-        current_vacant = get_object_or_404(Vacant, slug=current_networking.vacant.slug)
         current_networking.delete()
-        return redirect("vacant", current_vacant.slug)
+        return redirect("vacant", vacant_slug)
         #return JsonResponse({"success": "iten delete"}), redirect("vacant", current_vacant.enterprise.slug, current_vacant.slug)
 
 
