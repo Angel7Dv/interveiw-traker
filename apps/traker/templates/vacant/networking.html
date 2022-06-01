@@ -1,0 +1,52 @@
+{% load static %}
+
+<div>
+    <h4 class="text-3xl font-bold text-center mb-5" for="summary">
+        Networking:
+    </h4>
+    <!-- Net working button into enterprise form but no the form -->
+    <div
+        class="text-md font-semibold text-gray-700 flex justify-end  w-full bg-zinc-50 rounded-md shadow-xl p-4 ">
+
+
+        <div class="flex flex-col space-y-2 mr-4 w-full">
+
+
+            <!-- networking1 -->
+
+            {% for i in networking %}
+            <div class="pb-2 border-b border-indigo-800 flex items-center justify-end">
+                <div class="leading-none mr-2 text-right">
+
+                    <h6>
+                        nombre paquito
+                    </h6>
+                    <h6 class="text-sm font-bold">
+                        status de paquito sadsa dasd paquito sadsa dasd
+                    </h6>
+                </div>
+                <div class="w-10 ">
+                    <img class="rounded-full border border-black"
+                        src="{% static 'img/avatar_placeholder.png' %}" alt="">
+                </div>
+
+            </div>
+            {% endfor %}
+          
+
+
+
+        </div>
+
+        <div class="flex justify-end ">
+            <div>
+                <h3 onclick="showing('#add_networking')"
+                    class="bg-indigo-600 px-3 font-semibold text-white hover:cursor-pointer ">
+                    add
+                </h3>
+            </div>
+        </div>
+    </div>
+    <!-- End net working -->
+
+</div>

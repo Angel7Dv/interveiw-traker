@@ -1,0 +1,125 @@
+{% extends '../base/index.html' %}
+
+{% block title %}Vacants resgister{% endblock %}
+
+{% block name %}View vacant{% endblock %}
+
+
+{% block content %}
+
+
+<div class="py-5 border-b">
+
+    <form method="POST" class="mb-12" id="form_vacant">
+
+        <!-- Interview Data -->
+
+        {% csrf_token %}
+        <div class="grid grid-cols-3 gap-4 mb-5">
+
+            <div class="text-md font-semibold text-gray-700 flex flex-col w-full bg-zinc-50 rounded-md shadow-xl p-4 ">
+                <h2 class="text-gray-700 text-lg font-bold leading-none hover:underline hover:cursor-pointer">
+                    Roll Name:
+                </h2>
+                {{vacant_form.roll_Name }}
+
+            </div>
+
+            <div class="text-md font-semibold text-gray-700 flex flex-col w-full bg-zinc-50 rounded-md shadow-xl p-4 ">
+                <h2 class="text-gray-700 text-lg font-bold leading-none hover:underline hover:cursor-pointer">
+                    Status:
+                </h2>
+                {{vacant_form.status}}
+
+            </div>
+
+            <div class="text-md font-semibold text-gray-700 flex flex-col w-full bg-zinc-50 rounded-md shadow-xl p-4 ">
+                <h2 class="text-gray-700 text-lg font-bold leading-none hover:underline hover:cursor-pointer">
+                    email:
+                </h2>
+                {{vacant_form.email}}
+
+            </div>
+
+
+        </div>
+
+
+        <div class="grid  grid-cols-1 md:grid-cols-2 gap-4 ">
+            <div class="text-md font-semibold text-gray-700 flex flex-col w-full bg-zinc-50 rounded-md shadow-xl p-4 ">
+                <label class="text-xl" for="summary">
+                    Roll description:
+                </label>
+                {{ vacant_form.roll_description}}
+
+
+            </div>
+
+
+            <div class="text-md font-semibold text-gray-700 flex flex-col w-full bg-zinc-50 rounded-md shadow-xl p-4 ">
+                <label class="text-xl" for="summary">
+                    Strategy:
+                </label>
+                {{vacant_form.strategy}}
+
+
+            </div>
+        </div>
+        <button type="submit">
+            <div class="mt-5 hover:cursor-pointer 
+            bg-teal-400 rounded-md hover:bg-teal-600 w-full py-2 text-white font-semibold shadow-lg drop-shadow-lg
+         text-center text-2xl leading-none">
+
+                <span class="">
+                    Save
+                </span>
+            </div>
+        </button>
+
+        <!-- Interview Data -->
+    </form>
+
+
+
+    <script>
+        const form_vacant = $("#form_vacant")
+
+        console.log(
+            form_vacant
+        )
+
+        for (let i of Array(9).keys()) {
+            form_vacant[i].classList = "w-full bg-transparent p-2 mx-2 focus:outline-none"
+        }
+
+    </script>
+
+
+    <div class="grid grid-cols-2 gap-4">
+
+        <!-- Add Interview -->
+        {% include './interviews.html' %}
+
+        <!-- Add Interview -->
+
+
+        <!-- Networking -->
+        {% include './networking.html' %}
+
+    </div>
+
+
+    {% include './enterprise.html' %}
+
+    {% include './networking_form.html' %}
+    {% include './interview_form.html' %}
+
+
+</div>
+
+
+
+
+
+
+{% endblock content %}

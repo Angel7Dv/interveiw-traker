@@ -16,6 +16,7 @@ function getCookie(name) {
 
 
 async function delete_vacant(slug) {
+    console.log(slug)
     let csrftoken = getCookie('csrftoken');
     const apiRes = await fetch(`vacant/${slug}/`, {
         method: 'DELETE',

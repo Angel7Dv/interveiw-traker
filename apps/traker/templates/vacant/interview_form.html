@@ -1,0 +1,47 @@
+
+
+ <!-- FORM add interview -->
+ <div id="add_interview" class="hidden">
+    <div class=" z-10
+            w-full flex justify-center 
+            fixed inset-x-0 inset-y-0 
+            ">
+
+        <!-- background with click close -->
+        <div onclick="showing('#add_interview')" class="z-0
+                fixed w-full h-full
+                bg-black bg-opacity-50">
+            <!-- background with click close -->
+
+        </div>
+        <div class="
+                w-1/2 flex justify-center 
+                inset-x-0 inset-y-0 
+                py-[20%] md:py-[10%]
+                ">
+
+            <div class="z-0 w-full
+                    bg-gray-700 border border-black flex flex-col justify-end my-auto px-5 py-4 rounded-2xl  ">
+                <div class="flex justify-between">
+                    <h1 class="text-xl text-white">Add Interview</h1>
+                    <h3 onclick="showing('#add_interview')"
+                        class="bg-red-500 px-3 text-white hover:cursor-pointer "> x
+                    </h3>
+                </div>
+
+
+                <form id="interviewform" class="flex flex-col" method="POST"
+                    action="{% url 'post_interview' vacant.slug %}">
+
+                    {% csrf_token %}
+                    <input class="my-4 text-center bg-gray-600 text-white font-bold text-xl" type="datetime-local" name="ADD_INTERVIEW" id="">
+                    <input class="bg-indigo-600 px-3 font-semibold text-white hover:cursor-pointer mt-2 rounded-md" type="submit" name="query" value="enviar">
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- FORM add vacant -->
+
+    <!-- end Overview -->
+</div>

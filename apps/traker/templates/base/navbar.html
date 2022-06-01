@@ -1,32 +1,77 @@
-<nav class="bg-gray-800 text-white py-5 px-8">
-    <div class="flex justify-between">
+<!-- navabar -->
+{% load static %}
+<nav class="bg-gray-700 flex flex-col-reverse md:flex-row justify-between items-center px-10 py-4 shadow-xl ">
+    <div id="search" class=" flex shadow-md my-2">
+        <div class="border-2  bg-indigo-100 flex p-2 items-center  rounded-tl-md rounded-bl-md">
 
-        <a href="{#% url 'index' %#}">home</a>
+            <div style="width: 1rem;" name="search" class="">
+                <svg viewBox="0 0 24 24" aria-hidden="true"
+                    class="r-1nao33i r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
+                    <g>
+                        <path
+                            d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
+                        </path>
+                    </g>
+                </svg>
+            </div>
 
-        <div class="grid grid-cols-2 gap-2">
-            {% if request.user.is_authenticated %}
+            <input type="text" placeholder="search" class="bg-indigo-100 px-2 outline-none">
 
-            user: {{request.user}}
-            <button class="hover:bg-gray-400 border-black rounded-3xl p-2">
-                <a href="{% url 'logout' %}">
-                    logout
-                </a>
-                
-            </button>
-            {% else %}
-            <button class="hover:bg-gray-400 border-black rounded-3xl p-2">
-                <a href="{% url 'login' %}">
-                    login
-                </a>
-            </button>
-            <a href="{% url 'register' %}">
-
-                <button class="hover:bg-gray-400 border-black rounded-3xl p-2">
-                    register
-                </button>
-            </a>
-            {% endif %}
         </div>
+        <button class="bg-indigo-500 px-2 text-md  rounded-tr-md rounded-br-md">
+            <span class="drop-shadow-xl text-white ">
+
+                search
+            </span>
+        </button>
+    </div>
+
+
+    <div class="flex justify-between md:justify-end w-full items-center">
+
+        <button onclick="showing('#search')" class="md:hidden">
+            <div style="width: 3rem;" name="list">
+                <svg viewBox="0 0 24 24" aria-hidden="true"
+                    class="r-1nao33i r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
+                    <g>
+                        <path
+                            d="M19.75 22H4.25C3.01 22 2 20.99 2 19.75V4.25C2 3.01 3.01 2 4.25 2h15.5C20.99 2 22 3.01 22 4.25v15.5c0 1.24-1.01 2.25-2.25 2.25zM4.25 3.5c-.414 0-.75.337-.75.75v15.5c0 .413.336.75.75.75h15.5c.414 0 .75-.337.75-.75V4.25c0-.413-.336-.75-.75-.75H4.25z">
+                        </path>
+                        <path
+                            d="M17 8.64H7c-.414 0-.75-.337-.75-.75s.336-.75.75-.75h10c.414 0 .75.335.75.75s-.336.75-.75.75zm0 4.11H7c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h10c.414 0 .75.336.75.75s-.336.75-.75.75zm-5 4.11H7c-.414 0-.75-.335-.75-.75s.336-.75.75-.75h5c.414 0 .75.337.75.75s-.336.75-.75.75z">
+                        </path>
+                    </g>
+                </svg>
+            </div>
+
+        </button>
+
+        {% if request.user.is_authenticated %}
+        <div class="flex  bg-indigo-100 rounded-tl-md rounded-bl-md">
+            <div class="px-6 flex justify-center items-start  p-2 ">
+                <div class="w-10 mr-2">
+                    <img class="rounded-full border-2 border-black" src="{% static 'img/avatar_placeholder.png' %}" alt="">
+                </div>
+                <div class="flex justify-start flex-col">
+                    <p class=" text-xl">
+                        username
+                    </p>
+                    <p class="text-sm -mt-2">
+                        {{request.user}}
+                    </p>
+                </div>
+            </div>
+            <!-- options -->
+
+        </div>
+
+        {% endif %}
+        <button class="bg-indigo-500 p-2 text-md  mx-2  ">
+            <a class="drop-shadow-xl text-white" href="{% url 'logout' %}">
+                logout
+            </a>
+        </button>
     </div>
 
 </nav>
+<!-- end navbar -->

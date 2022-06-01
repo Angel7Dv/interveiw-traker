@@ -5,8 +5,8 @@
   "main": "postcss.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "postcss static/css/main.css -o static/css/main.min.css",
-    "build-watch": "npx tailwindcss -i ./static/css/main.css -o ./static/css/main.min.css --watch"
+    "build": "postcss static/css/main.css -o static/css/tailwind.css",
+    "build-watch": "npx tailwindcss -i ./static/css/main.css -o ./static/css/tailwind.css --watch"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,71 @@
+{% extends '../base.html' %}
+{% load static %}
+
+<!-- trae a main como padre -->
+{% block title %}Vacants resgister{% endblock %}
+
+{% block name %}Overview{% endblock %}
+
+
+{% block content %}
+<form id="login_form" action="" method="post" class="mx-20">
+
+    <div class="text-md flex flex-col space-y-5 w-full justify-center items-center">
+
+
+        <div class="text-center">
+            <h1 class="text-xl font-bold mb-10">Sign In Traker interview</h1>
+
+            <p>
+                Enter your email address and password to access account.
+            </p>
+        </div>
+
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div class="w-full flex items-center justify-start space-x-2">
+            <input type="checkbox" name="" id="Remember">
+            <label for="Remember">Remember me</label>
+        </div>
+        <div class="flex justify-between w-full space-x-2">
+            <button class="bg-blue-600 w-full py-4 text-white font-bold rounded-md shadow-lg">login</button>
+        </div>
+
+        <div class="text-center w-full mt-5">
+
+            <p >
+                Don't have an account?
+            </p>
+            <a href="{% url 'register' %}" class="border border-gray-400 px-2 rounded-md shadow">Sign up</a>
+        </div>
+    </div>
+
+</form>
+
+
+
+<script>
+    // queryselector
+    const $ = selector => document.querySelector(selector)
+    const form = $("#login_form")
+
+
+    for (let i of Array(3).keys()) {
+
+        let input = form[i]
+        let p = form[i].parentElement
+        let label = form[i].parentElement.children[0]
+
+        p.className = "w-full flex flex-col items-start"
+        label.className = "mb-3"
+        input.className = "w-full p-2 rounded-sm bg-transparent shadow-lg outline outline-1 focus:outline-blue-500 error:outline-red-500"
+
+
+        console.log(input, label, p)
+
+    }
+
+</script>
+
+{% endblock content %}

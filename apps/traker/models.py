@@ -26,10 +26,7 @@ class networking_status(models.TextChoices):
 
 # MODELS
 class Enterprise(models.Model):
-    user_register = models.ForeignKey(
-        User, null=True, blank=True, related_name="enterprises", on_delete=models.CASCADE)
     name = models.CharField(max_length=100, unique=True)
-
     web = models.URLField(null=True, blank=True)
     glassdoor_link = models.URLField(null=True, blank=True)
     summary = models.TextField(blank=True)
@@ -49,15 +46,20 @@ class Enterprise(models.Model):
 class Vacant(models.Model):
     user_register = models.ForeignKey(
         User, null=True, blank=True, related_name="vacants", on_delete=models.CASCADE)
+
     roll_Name = models.CharField(max_length=100)
+
     status = models.CharField(max_length=100, null=True,
                               blank=True, choices=vacant_status.choices)
-    enterprise = models.ForeignKey(
-        Enterprise, related_name="vacante", null=True, blank=True, on_delete=models.CASCADE)
+   
+    email = models.EmailField(null=True, blank=True)
+
     roll_description = models.TextField(blank=True)
-    my_cv = models.FileField(null=True, blank=True)
-    feed_back = models.TextField(blank=True)
     strategy = models.TextField(blank=True)
+    
+
+    enterprise = models.OneToOneField(
+        Enterprise, related_name="vacante", null=True, blank=True, on_delete=models.CASCADE)
     slug = models.CharField(max_length=100, unique=True, null=True, blank=True)
 
     def __str__(self):
@@ -96,13 +98,17 @@ class Interview(models.Model):
 
 class NetWorking(models.Model):
     name = models.CharField(max_length=100)
+    main_social = models.URLField(null=True, blank=True)
+
     user_register = models.ForeignKey(
         User, null=True, blank=True, related_name="networking", on_delete=models.CASCADE)
-    enterprise = models.ForeignKey(
-        Enterprise, related_name="networking", null=True, blank=True, on_delete=models.CASCADE)
+    vacant = models.ForeignKey(
+        Vacant, related_name="networking", null=True, blank=True, on_delete=models.CASCADE)
 
+    
+    
     position = models.CharField(max_length=100, blank=True)
-    status = models.CharField(max_length=100, null=True,
+    status_in = models.CharField(max_length=100, null=True,
                               blank=True, choices=networking_status.choices)
     enterprise_opinion = models.TextField(blank=True)
     interests = models.TextField(blank=True)
@@ -119,16 +125,16 @@ class NetWorking(models.Model):
         super(NetWorking, self).save(*args, **kwargs)
 
 
-class SocialNetworks(models.Model):
-    user = models.OneToOneField(
-        NetWorking, related_name="social_networks", null=True, blank=True, on_delete=models.CASCADE)
-    facebook = models.URLField(null=True, blank=True)
-    twitter = models.URLField(null=True, blank=True)
-    instagram = models.URLField(null=True, blank=True)
-    linkedin = models.URLField(null=True, blank=True)
-    web = models.URLField(null=True, blank=True)
-    tlf = models.CharField(null=True, blank=True, max_length=30)
-    mail = models.EmailField(null=True, blank=True)
+# class SocialNetworks(models.Model):
+#     user = models.OneToOneField(
+#         NetWorking, related_name="social_networks", null=True, blank=True, on_delete=models.CASCADE)
+#     facebook = models.URLField(null=True, blank=True)
+#     twitter = models.URLField(null=True, blank=True)
+#     instagram = models.URLField(null=True, blank=True)
+#     linkedin = models.URLField(null=True, blank=True)
+#     web = models.URLField(null=True, blank=True)
+#     tlf = models.CharField(null=True, blank=True, max_length=30)
+#     mail = models.EmailField(null=True, blank=True)
 
-    def __str__(self):
-        return f'{self.user} SocialNetworks'
+#     def __str__(self):
+#         return f'{self.user} SocialNetworks'

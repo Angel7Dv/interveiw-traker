@@ -48,9 +48,9 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'users.User'
 
-LOGIN_URL = 'login'  # cuando quieren acceder a una url con el decorador  @login_required
+LOGIN_URL = 'dashboard'  # cuando quieren acceder a una url con el decorador  @login_required
 LOGIN_REDIRECT_URL = 'dashboard'  
-LOGOUT_REDIRECT_URL = 'login' 
+LOGOUT_REDIRECT_URL = 'dashboard' 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

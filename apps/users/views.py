@@ -9,7 +9,9 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     if request.user.is_authenticated:
         return redirect("dashboard")
-    return render(request, 'index.html')
+    else:
+        return redirect("login")
+
 
 def register_user(request):		
     if request.method == 'POST':
@@ -22,11 +24,10 @@ def register_user(request):
         form = CreateUserForm()
     ctx = {'form':form}
 
-    return render(request, 'register.html', ctx)
+    print(form)
+
+    return render(request, 'users/register.html', ctx)
 
 
 
-@login_required
-def user_panel(request):
-    return render(request, 'user_panel.html')
 

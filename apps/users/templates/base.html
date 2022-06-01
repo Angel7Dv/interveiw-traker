@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+        <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+        <title>{% block title %}{% endblock %}</title>
+        <script src="{% static 'js/crud.js' %}"></script>
+        <script src="{% static 'js/showing.js' %}"></script>
+    </head>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        .full-height {
+            height: 100%;
+        }
+
+        .section-left {
+            background-image: url('{% static "img/worker/01.jpg" %}');
+            transform: scaleX(-1);
+        }
+
+        .text-mirron {
+            transform: scaleX(-1);
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="full-height flex ">
+        <section class="hidden sm:flex section-left w-2/3 bg-cover bg-center">
+            <div class="flex pb-24 justify-end items-center flex-col bg-black bg-opacity-30  absolute w-full h-full ">
+
+                <div class="text-mirron text-center text-white font-semibold
+                 bg-gray-600 bg-opacity-30 px-5 py-2 rounded-md">
+                    <h1 class="text-xl mb-2">
+                        hunting for work jobs!
+                    </h1>
+                    <h3 class="text-sm">
+                        It's a elegent web traker for looking jobs. made with much love!
+                    </h3>
+                    <h6 class="">
+                        - Angel riera
+                    </h6>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Right -->
+        <div class="w-full sm:w-1/3 flex justify-center items-center bg-blue-100">
+
+            {% block content %}
+            {% endblock content %}
+
+
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

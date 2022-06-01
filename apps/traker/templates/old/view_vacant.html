@@ -3,7 +3,7 @@
 <!-- trae a main como padre -->
 {% block title %}Vacant detail{% endblock %}
 
-{% block description %}vacant: {{vacant}} {{vacant.enterprise}}{% endblock %}
+{% block name %}Overview{% endblock %}
 
 
 {% block content %}
@@ -109,6 +109,7 @@
 
 <script>
     const enterprise_form = document.getElementById("enterprise_form")
+    
     for (let i of Array(7).keys()) {
         enterprise_form[i].className = "w-full bg-gray-300 text-gray-900 font-semibold leading-none focus:outline-none bg-transparent border-b border-black mb-16"
     }
