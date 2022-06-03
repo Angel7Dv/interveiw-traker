@@ -11,32 +11,34 @@
 <form id="login_form" action="" method="post" class="mx-20">
 
     <div class="text-md flex flex-col space-y-5 w-full justify-center items-center">
-
-
-        <div class="text-center">
-            <h1 class="text-xl font-bold mb-10">Sign In Traker interview</h1>
-
-            <p>
+        <div class="mb-3">
+            <h1 class="text-xl font-bold  text-center">Sign In Traker interview</h1>
+            <p  class="text-center">
                 Enter your email address and password to access account.
             </p>
         </div>
 
-        {% csrf_token %}
 
-        
-        <div class="w-full flex flex-col items-start ">
-            <label for="Email_input" class="mb-3">Email address</label>
+        {% csrf_token %}
+        <div class="w-full flex flex-col items-start mt-3 ">
+            <label for="Email_input">Email address</label>
             {{ form.email }}
 
         </div>
 
         <div class="w-full flex flex-col items-start ">
-            <label for="password_input" class="mb-3">password</label>
+            <label for="Email_input">User name</label>
+            {{ form.name }}
+
+        </div>
+
+        <div class="w-full flex flex-col items-start ">
+            <label for="password_input">password</label>
             {{ form.password1 }}
 
         </div>
         <div class="w-full flex flex-col items-start ">
-            <label for="password_input" class="mb-3">password</label>
+            <label for="password_input">password</label>
             {{ form.password2 }}
 
         </div>
@@ -46,7 +48,7 @@
             <label for="Remember">Remember me</label>
         </div>
         <div class="flex justify-between w-full space-x-2">
-            <button class="bg-blue-600 w-full py-4 text-white font-bold rounded-md shadow-lg">login</button>
+            <button class="bg-blue-600 w-full py-4 text-white font-bold rounded-md shadow-lg">Register</button>
         </div>
 
         <div class="text-center w-full mt-5">
@@ -68,22 +70,17 @@
     const form = $("#login_form")
 
 
-    for (let i of Array(4).keys()) {
+    for (let i of Array(5).keys()) {
         let input = form[i]
         let p = form[i].parentElement
         let label = form[i].parentElement.children[0]
 
         p.className = "w-full flex flex-col items-start"
-        label.className = "mb-3"
-        input.className = "w-full p-2 rounded-sm bg-transparent shadow-lg outline outline-1 focus:outline-blue-500 error:outline-red-500"
+        label.className = "mt-3"
+        input.className = "mb-3 w-full p-2 rounded-sm bg-transparent shadow-lg outline outline-1 focus:outline-blue-500 error:outline-red-500"
        
 
     }
-
-
-
- 
-
 
 </script>
 

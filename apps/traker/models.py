@@ -4,8 +4,6 @@ from .utils import get_original_slug
 from users.models import User
 
 # TYPES
-
-
 class type_interview(models.TextChoices):
     TECHNICAL = "technical"
     CULTURAL = "cultural"
@@ -30,8 +28,6 @@ class Enterprise(models.Model):
     web = models.URLField(null=True, blank=True)
     glassdoor_link = models.URLField(null=True, blank=True)
     summary = models.TextField(blank=True)
-    vision = models.TextField(blank=True)
-    mission = models.TextField(blank=True)
 
     slug = models.CharField(max_length=100, unique=True, null=True, blank=True)
 
@@ -44,7 +40,7 @@ class Enterprise(models.Model):
 
 
 class Vacant(models.Model):
-    user_register = models.ForeignKey(
+    user_added = models.ForeignKey(
         User, null=True, blank=True, related_name="vacants", on_delete=models.CASCADE)
 
     roll_Name = models.CharField(max_length=100)
@@ -57,9 +53,9 @@ class Vacant(models.Model):
     roll_description = models.TextField(blank=True)
     strategy = models.TextField(blank=True)
     
-
     enterprise = models.OneToOneField(
         Enterprise, related_name="vacante", null=True, blank=True, on_delete=models.CASCADE)
+
     slug = models.CharField(max_length=100, unique=True, null=True, blank=True)
 
     def __str__(self):
@@ -72,7 +68,7 @@ class Vacant(models.Model):
 
 
 class Interview(models.Model):
-    user_register = models.ForeignKey(
+    user_added = models.ForeignKey(
         User, null=True, blank=True, related_name="interviews", on_delete=models.CASCADE)
     vacant = models.ForeignKey(
         Vacant, related_name="interview", on_delete=models.CASCADE)
@@ -100,16 +96,16 @@ class NetWorking(models.Model):
     name = models.CharField(max_length=100)
     main_social = models.URLField(null=True, blank=True)
 
-    user_register = models.ForeignKey(
+    user_added = models.ForeignKey(
         User, null=True, blank=True, related_name="networking", on_delete=models.CASCADE)
     vacant = models.ForeignKey(
         Vacant, related_name="networking", null=True, blank=True, on_delete=models.CASCADE)
 
-    
-    
     position = models.CharField(max_length=100, blank=True)
     status_in = models.CharField(max_length=100, null=True,
                               blank=True, choices=networking_status.choices)
+
+
     enterprise_opinion = models.TextField(blank=True)
     interests = models.TextField(blank=True)
     feed_back = models.TextField(blank=True)
@@ -126,7 +122,7 @@ class NetWorking(models.Model):
 
 
 # class SocialNetworks(models.Model):
-#     user = models.OneToOneField(
+#     user_networks = models.OneToOneField(
 #         NetWorking, related_name="social_networks", null=True, blank=True, on_delete=models.CASCADE)
 #     facebook = models.URLField(null=True, blank=True)
 #     twitter = models.URLField(null=True, blank=True)

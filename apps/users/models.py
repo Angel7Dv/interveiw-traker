@@ -53,3 +53,15 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return "/users/%i/" % (self.pk)
+
+
+# class Profile(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     cover_letter = models.TextField()
+#     elevator_pitch  = models.TextField()
+    
+#     about_me = models.TextField()
+#     skills = models.TextField()
+#     cv  = models.TextField()
+#     experience  = models.TextField()
+#     projects  = models.TextField()
