@@ -4,7 +4,7 @@ from .forms import CreateUserForm
 
 from django.contrib.auth.decorators import login_required
 
-from .models import Profile
+#from .models import User
 
 # Create your views here.
 
@@ -20,7 +20,7 @@ def register_user(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():            
             user = form.save()     
-            Profile.objects.create(user=user) 
+            #User.objects.create(user=user) 
 
             login(request, user)    
             return redirect('dashboard')
